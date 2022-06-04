@@ -43,16 +43,42 @@ class AddBlockAction(Action):
         pass
 
 
-class MoveAction(Action):
-    def __init__(self, direction):
-        self.direction = direction
+class MoveActionNormalize(Action):  # normalized movement, can even work with joystick. TODO finish function so it can work with V and H ath the same time
+    def __init__(self, direction_H, direction_Y):
+        self.direction_H = direction_H
+        self.direction_Y = direction_Y
 
     def wall(self, universe):
         pass
 
     def change_universe(self, universe, render):
-        universe.player.direction = self.direction
-        universe.player.move()
+        universe.player.direction_H += self.direction_H
+        universe.player.direction_Y += self.direction_Y
+        universe.player.move_normalize()
+
+
+class MoveActionH(Action):  # can move only horizontally
+    def __init__(self, direction_h):
+        self.direction_h = direction_h
+
+    def wall(self, universe):
+        pass
+
+    def change_universe(self, universe, render):
+        universe.player.direction_H = self.direction_h
+        universe.player.move_h()
+
+
+class MoveActionV(Action):  # can move only vertically
+    def __init__(self, direction_y):
+        self.direction_y = direction_y
+
+    def wall(self, universe):
+        pass
+
+    def change_universe(self, universe, render):
+        universe.player.direction_Y = self.direction_y
+        universe.player.move_v()
 
 
 class RunAction(Action):
@@ -81,7 +107,7 @@ class PressedArrowH(Action):
 
     def change_universe(self, universe, render):
         # print("moving viewport")
-        render.move_H(self.direction)
+        render.move_h(self.direction)
 
 
 class PressedArrowV(Action):
@@ -90,4 +116,4 @@ class PressedArrowV(Action):
 
     def change_universe(self, universe, render):
         # print("moving viewport")
-        render.move_V(self.direction)
+        render.move_v(self.direction)
