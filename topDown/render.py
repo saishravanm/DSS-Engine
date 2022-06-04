@@ -1,4 +1,5 @@
 import pygame
+
 from coords import CoordConverter
 
 
@@ -12,7 +13,7 @@ class Renderer:
         self.speed = 5
         self.color = (250,0,0)  # (250,250,250) and (0,0,0)
 
-    def in_viewport(self, line):  # pos need to be in real coordinates(rc)
+    def in_viewport(self, line):  # pos need to be in real coordinates(rc) and pygame has it automatically checked
 
         (pos1, pos2) = line
         (xp1, yp1) = self.coords.from_universe(pos1)
@@ -35,6 +36,13 @@ class Renderer:
         ((x1, y1),(x2, y2)) = self.viewport
         self.viewport = ((x1, y1 + self.speed * mult),(x2, y2 + self.speed * mult))
         self.coords = CoordConverter(self.scale, self.viewport)
+
+    def draw(self, surface):
+        for line in surface:
+            # if(self.in_viewport(line)):  # pygame has it automatically checked so don't use it here
+            pos1 = self.coords.from_universe(line[0])
+            pos2 = self.coords.from_universe(line[1])
+            pygame.draw.line(self.screen, self.color, pos1, pos2)
 
     def draw_player(self, player):
         pos1 = self.coords.from_universe(player.location)
