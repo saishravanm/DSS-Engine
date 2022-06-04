@@ -28,12 +28,12 @@ class Renderer:
             return True
         return False
 
-    def move_H(self, mult):
+    def move_h(self, mult):
         ((x1, y1),(x2, y2)) = self.viewport
         self.viewport = ((x1 + self.speed * mult, y1),(x2 + self.speed * mult, y2))
         self.coords = CoordConverter(self.scale, self.viewport)
 
-    def move_V(self, mult):
+    def move_v(self, mult):
         ((x1, y1),(x2, y2)) = self.viewport
         self.viewport = ((x1, y1 + self.speed * mult),(x2, y2 + self.speed * mult))
         self.coords = CoordConverter(self.scale, self.viewport)

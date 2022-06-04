@@ -10,10 +10,16 @@ TRANSLATION_MAP = {
     'game': {
         'key_pressed': {
             # add some methods that are executed when key is pressed
-            pygame.K_LEFT: MoveAction(-1),
-            pygame.K_RIGHT: MoveAction(1),
+            # pygame.K_LEFT: MoveActionNormalize(-1, 0),
+            # pygame.K_RIGHT: MoveActionNormalize(1, 0),
+            # pygame.K_UP: MoveActionNormalize(0, -1),
+            # pygame.K_DOWN: MoveActionNormalize(0, 1),
+            pygame.K_LEFT: MoveActionH(-1),
+            pygame.K_RIGHT: MoveActionH(1),
+            pygame.K_UP: MoveActionV(-1),
+            pygame.K_DOWN: MoveActionV(1),
             pygame.K_LSHIFT: RunAction(),
-            # pygame.KMOD_NONE: StandAction()
+            # pygame.KMOD_NONE: StandAction()  # don't use it
         },
         'key_not_pressed': {
             # add some methods that are executed when key is not pressed
@@ -25,7 +31,7 @@ TRANSLATION_MAP = {
         },
         'key_up': {
             # add some methods that are executed when key is up pressed
-            # pygame.K_LSHIFT: StopRunAction()
+            pygame.K_LSHIFT: StopRunAction()
         },
         'mouse_pressed': {
             # add some methods that are executed when mouse key is pressed
