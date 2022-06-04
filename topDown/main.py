@@ -36,7 +36,6 @@ def main_loop():
         result = translator.translate_pressed(universe.mode)
         for event in pygame.event.get():
             universe.mouseCoord = pygame.mouse.get_pos()
-            print(universe.mouseCoord)
             result += translator.translate_event(universe.mode, event)
         return result
 
