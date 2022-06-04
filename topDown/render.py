@@ -12,6 +12,7 @@ class Renderer:
         self.scale = scale
         self.speed = 5
         self.color = (250,0,0)  # (250,250,250) and (0,0,0)
+        self.line_thickness = 5
 
     def in_viewport(self, line):  # pos need to be in real coordinates(rc) and pygame has it automatically checked
 
@@ -42,7 +43,7 @@ class Renderer:
             # if(self.in_viewport(line)):  # pygame has it automatically checked so don't use it here
             pos1 = self.coords.from_universe(line[0])
             pos2 = self.coords.from_universe(line[1])
-            pygame.draw.line(self.screen, self.color, pos1, pos2)
+            pygame.draw.line(self.screen, self.color, pos1, pos2, self.line_thickness)
 
     def draw_player(self, player):
         pos1 = self.coords.from_universe(player.location)
