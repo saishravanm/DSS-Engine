@@ -15,6 +15,6 @@ class Universe:
         self.gravity = -5
 
     def update(self):  # does something every frame, could be useful for enemy AI or update some values
-        if(self.mode == "game"):
+        if self.mode == "game":
             pass  # do something
         pass
