@@ -1,5 +1,7 @@
 import math
 
+NORM_K = (1 / math.sqrt(2))
+
 
 class Player:
     def __init__(self):
@@ -31,13 +33,13 @@ class Player:
         self.stand_hit_box = (100, -200)
         self.crouch_hit_box = (100, -100)
 
-    def move_normalize(self):  # TODO under development
-        if(self.direction_H * self.direction_Y == 0):  # normalize if needed
+    def move_normalize(self):  # TODO under development.
+        if self.direction_H * self.direction_Y == 0:  # normalize if needed
             self.location = (self.location[0] + self.direction_H * self.speed * self.run * self.crouch, self.location[1])
             self.location = (self.location[0], self.location[1] + self.direction_Y * self.speed * self.run * self.crouch)
         else:
-            self.location = (self.location[0] + self.direction_H * (1 / math.sqrt(2)) * self.speed * self.run * self.crouch, self.location[1])
-            self.location = (self.location[0], self.location[1] + self.direction_Y * (1 / math.sqrt(2)) * self.speed * self.run * self.crouch)
+            self.location = (self.location[0] + self.direction_H * NORM_K * self.speed * self.run * self.crouch, self.location[1])
+            self.location = (self.location[0], self.location[1] + self.direction_Y * NORM_K * self.speed * self.run * self.crouch)
 
     def move_h(self):
         self.location = (self.location[0] + self.direction_H * self.speed * self.run * self.crouch, self.location[1])

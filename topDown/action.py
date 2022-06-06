@@ -3,6 +3,7 @@ from render import Renderer
 
 
 class Action:
+    # pylint: disable=no-self-use
     def is_done(self):
         return False
 
