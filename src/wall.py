@@ -1,6 +1,6 @@
 
 class Wall:
-    def __init__(self):
-        self.starting_point = (0,0)
-        self.ending_point = (0,0)
-        self.thickness = 1
+    def __init__(self,starting_point,ending_point,thickness):
+        self.starting_point = starting_point
+        self.ending_point = ending_point
+        self.thickness = thickness
