@@ -48,3 +48,5 @@ class Renderer:
     def draw_player(self, player):
         pos1 = self.coords.from_universe(player.location)
         pygame.draw.rect(self.screen, self.color, (pos1[0], pos1[1], player.hit_box[0], player.hit_box[1]), 0,1)
+    def draw_wall(self, wall):  
+        pygame.draw.line(self.screen,self.color,wall.starting_point,wall.ending_point,wall.thickness)

@@ -28,7 +28,6 @@ universe = Universe()
 # coords = CoordConverter(scale, ((0,0), display))  # here you can scale and modify out put on the display
 render = Renderer(screen, ((0,0), display), scale)
 
-
 def main_loop():
     translator = Translator(settings.TRANSLATION_MAP, DoneAction())
 
@@ -52,7 +51,6 @@ def main_loop():
         render.draw(universe.surface_altitudes)
         render.draw_player(universe.player)
         pygame.display.flip()
-
         universe.update()
         clock.tick(settings.FPS)
 

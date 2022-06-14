@@ -1,11 +1,12 @@
 from player import Player
-
-
+from wall import Wall
 class Universe:
     def __init__(self):
         self.surface_altitudes = [((100,100),(500,100))]
         self.collision_points = []
         self.player = Player()
+        self.wall = Wall()
+        self.wall_list = []
         self.mode = "map"
         self.buildMode = "line"
         self.mouseCoords = (0,0)
@@ -17,4 +18,5 @@ class Universe:
     def update(self):  # does something every frame, could be useful for enemy AI or update some values
         if self.mode == "game":
             pass  # do something
+
         pass
