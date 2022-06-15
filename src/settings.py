@@ -3,21 +3,21 @@ import pygame
 from action import *
 
 
-FPS = 600
+FPS = 60
 HOR_SPEED = 12
 
 TRANSLATION_MAP = {
     'game': {
         'key_pressed': {
             # add some methods that are executed when key is pressed
-            # pygame.K_LEFT: MoveActionNormalize(-1, 0),
-            # pygame.K_RIGHT: MoveActionNormalize(1, 0),
-            # pygame.K_UP: MoveActionNormalize(0, -1),
-            # pygame.K_DOWN: MoveActionNormalize(0, 1),
-            pygame.K_LEFT: MoveActionH(-1),
-            pygame.K_RIGHT: MoveActionH(1),
-            pygame.K_UP: MoveActionV(-1),
-            pygame.K_DOWN: MoveActionV(1),
+            pygame.K_LEFT: MoveActionNormalize((0, -1)),
+            pygame.K_RIGHT: MoveActionNormalize((0, 1)),
+            pygame.K_UP: MoveActionNormalize((1, 0)),
+            pygame.K_DOWN: MoveActionNormalize((-1, 0)),
+            # pygame.K_LEFT: MoveActionH(-1),
+            # pygame.K_RIGHT: MoveActionH(1),
+            # pygame.K_UP: MoveActionV(-1),
+            # pygame.K_DOWN: MoveActionV(1),
             pygame.K_LSHIFT: RunAction(),
             # pygame.KMOD_NONE: StandAction()  # don't use it
         },

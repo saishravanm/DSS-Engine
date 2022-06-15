@@ -1,3 +1,4 @@
+import cmath
 import math
 
 NORM_K = (1 / math.sqrt(2))
@@ -25,24 +26,42 @@ class Player:
         self.gravity_acceleration = 0.5
         self.jump_force = 15
         self.crouch = 1
-        self.direction = 0
         self.direction_h = 0
         self.direction_y = 0
         self.run = 1
-        self.hit_box = (100,-200)
+        self.hit_box = (100, -100)
         self.stand_hit_box = (100, -200)
         self.crouch_hit_box = (100, -100)
+        self.direction = (0, 0)
+        self.rotation = (0, 0)
+        self.current_speed = 0
+        self.angle = 0
 
-    def move_normalize(self):  # TODO under development.
-        if self.direction_h * self.direction_y == 0:  # normalize if needed
-            self.location = (self.location[0] + self.direction_h * self.speed * self.run * self.crouch, self.location[1])
-            self.location = (self.location[0], self.location[1] + self.direction_y * self.speed * self.run * self.crouch)
-        else:
-            self.location = (self.location[0] + self.direction_h * NORM_K * self.speed * self.run * self.crouch, self.location[1])
-            self.location = (self.location[0], self.location[1] + self.direction_y * NORM_K * self.speed * self.run * self.crouch)
+    def move_normalize(self):
+        speed_x = math.cos(self.angle) * self.current_speed
+        speed_y = math.sin(self.angle) * self.current_speed
+        self.location = (self.location[0] + speed_x, self.location[1] + speed_y)
+
+    def update_speed(self):
+        return self.speed * self.run
+
+    def update_angle(self):
+        return cmath.phase(complex(self.direction[0], self.direction[1]) * complex(self.rotation[0], self.rotation[1]))
 
     def move_h(self):
         self.location = (self.location[0] + self.direction_h * self.speed * self.run * self.crouch, self.location[1])
 
     def move_v(self):
         self.location = (self.location[0], self.location[1] + self.direction_y * self.speed * self.run * self.crouch)
+
+    def setup(self, mouse_location):
+        self.direction = (0, 0)
+        self.current_speed = 0
+        self.rotation = (mouse_location[0] - self.location[0], mouse_location[1] - self.location[1])
+        self.angle = cmath.phase(complex(self.rotation[0], self.rotation[1]))
+
+    def update(self):
+        if self.direction != (0, 0):
+            self.angle = self.update_angle()
+            self.current_speed = self.update_speed()
+            self.move_normalize()
