@@ -44,18 +44,14 @@ class AddBlockAction(Action):
         pass
 
 
-class MoveActionNormalize(Action):  # normalized movement, can even work with joystick. TODO finish function so it can work with V and H ath the same time
-    def __init__(self, direction_h, direction_y):
-        self.direction_h = direction_h
-        self.direction_y = direction_y
-
-    def wall(self, universe):
-        pass
+class MoveActionNormalize(Action):  # normalized movement, can even work with joystick.
+    def __init__(self, direction):
+        self.direction = direction
 
     def change_universe(self, universe, render):
-        universe.player.direction_h += self.direction_h
-        universe.player.direction_y += self.direction_y
-        universe.player.move_normalize()
+        universe.player.direction = \
+            (universe.player.direction[0] + self.direction[0],
+             universe.player.direction[1] + self.direction[1])
 
 
 class MoveActionH(Action):  # can move only horizontally
