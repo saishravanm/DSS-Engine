@@ -40,6 +40,8 @@ def main_loop():
         return result
 
     while True:
+        universe.setup(render.coords)
+
         actions = collect_actions()
 
         if any(action.is_done() for action in actions):
@@ -48,12 +50,11 @@ def main_loop():
         for action in actions:
             action.change_universe(universe, render)
 
-        screen.fill((255,255,255))
-        render.draw(universe.surface_altitudes)
-        render.draw_player(universe.player)
+        universe.update()
+
+        render.update(universe)
         pygame.display.flip()
 
-        universe.update()
         clock.tick(settings.FPS)
 
 
