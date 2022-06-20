@@ -1,12 +1,14 @@
 import pygame
 
 from coords import CoordConverter
+from camera import Camera
 
 
 class Renderer:
 
     def __init__(self, screen, viewport, scale):
         self.coords = CoordConverter(scale, viewport)
+        self.camera = Camera(self.coords.to_universe((viewport[1][0]/2, viewport[1][1]/2)), (0, 0), "follow_strict")
         self.screen = screen
         self.viewport = viewport
         self.scale = scale
@@ -49,6 +51,11 @@ class Renderer:
         self.viewport = ((x1, y1 + displacement),(x2, y2 + displacement))
         self.coords = CoordConverter(self.scale, self.viewport)
 
+    def move_viewport(self, displacement_x: 0, displacement_y: 0):
+        ((x1, y1), (x2, y2)) = self.viewport
+        self.viewport = ((x1 + displacement_x, y1 + displacement_y), (x2 + displacement_x, y2 + displacement_y))
+        self.coords = CoordConverter(self.scale, self.viewport)
+
     def draw(self, surface):
         for line in surface:
             # if(self.in_viewport(line)):  # pygame has it automatically checked so don't use it here
@@ -62,7 +69,28 @@ class Renderer:
         player_hit_box_y = player.hit_box[1] / self.scale[1]
         pygame.draw.rect(self.screen, self.color, (pos1[0], pos1[1], player_hit_box_x, player_hit_box_y), 0, 1)
 
+    def adjust_viewport(self, camera):
+        c_loc = camera.location
+        ((x1, y1), (x2, y2)) = self.viewport
+        scr_center = self.coords.to_universe(((x2 - x1)/2, (y2 - y1)/2))
+        if c_loc != scr_center:
+            displacement = (
+                c_loc[0] - scr_center[0],
+                c_loc[1] - scr_center[1]
+            )
+            self.move_viewport(displacement[0], displacement[1])
+
+    def update_viewport(self, universe):
+        self.camera.update(universe)
+        self.adjust_viewport(self.camera)
+
     def update(self, universe):
         self.screen.fill((255,255,255))
+
+        # adjust camera
+        if universe.mode == "game":
+            self.update_viewport(universe)
+
+        # draw
         self.draw(universe.surface_altitudes)
         self.draw_player(universe.player)
