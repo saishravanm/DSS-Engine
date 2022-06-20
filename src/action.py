@@ -114,3 +114,14 @@ class PressedArrowV(Action):
     def change_universe(self, universe, render):
         # print("moving viewport")
         render.move_v(self.direction)
+
+
+class ZoomIn(Action):
+    def change_universe(self, universe, render):
+        render.add_scale((0.01,0.01))
+
+
+class ZoomOut(Action):
+    def change_universe(self, universe, render):
+        if render.scale != (1,1):
+            render.add_scale((-0.01,-0.01))

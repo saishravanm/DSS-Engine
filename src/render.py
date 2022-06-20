@@ -14,6 +14,15 @@ class Renderer:
         self.color = (250,0,0)  # (250,250,250) and (0,0,0)
         self.line_thickness = 5
 
+    def set_scale(self, new_scale):
+        self.scale = new_scale
+        self.coords = CoordConverter(self.scale, self.viewport)
+
+    def add_scale(self, d_scale):
+        new_scale = (self.scale[0] + d_scale[0], self.scale[1] + d_scale[1])
+        self.scale = new_scale
+        self.coords = CoordConverter(self.scale, self.viewport)
+
     def in_viewport(self, line):  # pos need to be in real coordinates(rc) and pygame has it automatically checked
 
         (pos1, pos2) = line
@@ -30,12 +39,14 @@ class Renderer:
 
     def move_h(self, mult):
         ((x1, y1),(x2, y2)) = self.viewport
-        self.viewport = ((x1 + self.speed * mult, y1),(x2 + self.speed * mult, y2))
+        displacement = self.speed * mult
+        self.viewport = ((x1 + displacement, y1),(x2 + displacement, y2))
         self.coords = CoordConverter(self.scale, self.viewport)
 
     def move_v(self, mult):
         ((x1, y1),(x2, y2)) = self.viewport
-        self.viewport = ((x1, y1 + self.speed * mult),(x2, y2 + self.speed * mult))
+        displacement = self.speed * mult
+        self.viewport = ((x1, y1 + displacement),(x2, y2 + displacement))
         self.coords = CoordConverter(self.scale, self.viewport)
 
     def draw(self, surface):
@@ -47,7 +58,9 @@ class Renderer:
 
     def draw_player(self, player):
         pos1 = self.coords.from_universe(player.location)
-        pygame.draw.rect(self.screen, self.color, (pos1[0], pos1[1], player.hit_box[0], player.hit_box[1]), 0, 1)
+        player_hit_box_x = player.hit_box[0] / self.scale[0]
+        player_hit_box_y = player.hit_box[1] / self.scale[1]
+        pygame.draw.rect(self.screen, self.color, (pos1[0], pos1[1], player_hit_box_x, player_hit_box_y), 0, 1)
 
     def update(self, universe):
         self.screen.fill((255,255,255))
