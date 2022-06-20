@@ -20,6 +20,8 @@ TRANSLATION_MAP = {
             # pygame.K_DOWN: MoveActionV(1),
             pygame.K_LSHIFT: RunAction(),
             # pygame.KMOD_NONE: StandAction()  # don't use it
+            pygame.K_1: ZoomIn(),
+            pygame.K_2: ZoomOut(),
         },
         'key_not_pressed': {
             # add some methods that are executed when key is not pressed
