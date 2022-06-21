@@ -38,8 +38,8 @@ class Player:
         self.angle = 0
 
     def move_normalize(self):
-        speed_x = math.cos(self.angle) * self.current_speed
-        speed_y = math.sin(self.angle) * self.current_speed
+        speed_x = round(math.cos(self.angle) * self.current_speed)
+        speed_y = round(math.sin(self.angle) * self.current_speed)
         self.location = (self.location[0] + speed_x, self.location[1] + speed_y)
 
     def update_speed(self):
