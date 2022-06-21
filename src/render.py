@@ -8,7 +8,7 @@ class Renderer:
 
     def __init__(self, screen, viewport, scale):
         self.coords = CoordConverter(scale, viewport)
-        self.camera = Camera(self.coords.to_universe((viewport[1][0]/2, viewport[1][1]/2)), (0, 0), "follow_strict")
+        self.camera = Camera(self.coords.to_universe((viewport[1][0]/2, viewport[1][1]/2)), (0, 0), "follow_in_circle")
         self.screen = screen
         self.viewport = viewport
         self.scale = scale
@@ -51,7 +51,7 @@ class Renderer:
         self.viewport = ((x1, y1 + displacement),(x2, y2 + displacement))
         self.coords = CoordConverter(self.scale, self.viewport)
 
-    def move_viewport(self, displacement_x: 0, displacement_y: 0):
+    def move_viewport(self, displacement_x=0, displacement_y=0):
         ((x1, y1), (x2, y2)) = self.viewport
         self.viewport = ((x1 + displacement_x, y1 + displacement_y), (x2 + displacement_x, y2 + displacement_y))
         self.coords = CoordConverter(self.scale, self.viewport)
