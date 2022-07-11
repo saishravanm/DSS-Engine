@@ -116,12 +116,12 @@ class PressedArrowV(Action):
         render.move_v(self.direction)
 
 
-class ZoomIn(Action):
+class ZoomIn(Action):  # TODO fix: a fraction to whole number conversion so position is a whole number
     def change_universe(self, universe, render):
         render.add_scale((0.01,0.01))
 
 
-class ZoomOut(Action):
+class ZoomOut(Action):  # TODO fix: a fraction to whole number conversion so position is a whole number
     def change_universe(self, universe, render):
         if render.scale != (1,1):
             render.add_scale((-0.01,-0.01))
