@@ -2,8 +2,10 @@ import cmath
 import math
 
 NORM_K = (1 / math.sqrt(2))
-
-
+FOV = math.pi / 3
+HALF_FOV = FOV/2
+CASTED_RAYS = 120
+STEP_ANGLE = FOV / CASTED_RAYS
 class Player:
     def __init__(self):
         self.state = "standing"
@@ -36,6 +38,11 @@ class Player:
         self.rotation = (0, 0)
         self.current_speed = 0
         self.angle = 0
+        self.player_angle = math.pi
+        self.FOV = FOV
+        self.HALF_FOV = HALF_FOV
+        self.CASTED_RAYS = CASTED_RAYS
+        self.STEP_ANGLE = STEP_ANGLE
 
     def move_normalize(self):
         speed_x = round(math.cos(self.angle) * self.current_speed)
