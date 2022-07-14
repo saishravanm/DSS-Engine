@@ -1,5 +1,5 @@
 import pygame
-
+import math
 from coords import CoordConverter
 from camera import Camera
 
@@ -15,6 +15,7 @@ class Renderer:
         self.speed = 5
         self.color = (250,0,0)  # (250,250,250) and (0,0,0)
         self.line_thickness = 5
+        self.MAX_DEPTH = 1000
 
         # EXPERIMENTAL
         self.draw_gen_obj_map = {"rect":self.draw_gen_obj_rect_2, "circle":self.draw_gen_obj_circle}
@@ -71,6 +72,33 @@ class Renderer:
         player_hit_box_x = player.hit_box[0] / self.scale[0]
         player_hit_box_y = player.hit_box[1] / self.scale[1]
         pygame.draw.rect(self.screen, self.color, (pos1[0], pos1[1], player_hit_box_x, player_hit_box_y), 0, 1)
+    def draw_fov(self, player):
+        #direction
+        pygame.draw.line(self.screen, (49, 20, 179), (player.location[0], player.location[1]),
+                         (player.location[0] - math.sin(player.player_angle) * 50,
+                          player.location[1] + math.cos(player.player_angle) * 50), 3)
+
+        pygame.draw.line(self.screen, (49, 20, 179), (player.location[0], player.location[1]),
+                         (player.location[0] - math.sin(player.player_angle - player.HALF_FOV) * 50,
+                          player.location[1] + math.cos(player.player_angle - player.HALF_FOV) * 50), 3)
+
+        pygame.draw.line(self.screen, (49, 20, 179), (player.location[0], player.location[1]),
+                         (player.location[0] - math.sin(player.player_angle + player.HALF_FOV) * 50,
+                          player.location[1] + math.cos(player.player_angle + player.HALF_FOV) * 50), 3)
+    def cast_rays(self,player):
+
+        start_angle = player.player_angle - player.HALF_FOV
+
+        for ray in range(player.CASTED_RAYS):
+            for depth in range(self.MAX_DEPTH):
+                target_x = player.location[0] - math.sin(start_angle) * depth
+                target_y = player.location[1] + math.cos(start_angle) * depth
+
+                #draw casted ray
+                pygame.draw.line(self.screen, (0, 255, 0), (player.location[0],player.location[1]), (target_x,target_y))
+
+            start_angle += player.STEP_ANGLE
+
 
     def adjust_viewport(self, camera):
         c_loc = camera.location
@@ -97,6 +125,8 @@ class Renderer:
 
         # draw
         self.draw(universe.surface_altitudes)
+        self.cast_rays(universe.player)
+        self.draw_fov(universe.player)
         self.draw_player(universe.player)
 
         # EXPERIMENTAL
