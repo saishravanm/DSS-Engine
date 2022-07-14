@@ -72,33 +72,34 @@ class Renderer:
         player_hit_box_x = player.hit_box[0] / self.scale[0]
         player_hit_box_y = player.hit_box[1] / self.scale[1]
         pygame.draw.rect(self.screen, self.color, (pos1[0], pos1[1], player_hit_box_x, player_hit_box_y), 0, 1)
+
     def draw_fov(self, player):
         #direction
-        pygame.draw.line(self.screen, (49, 20, 179), (player.location[0], player.location[1]),
-                         (player.location[0] - math.sin(player.player_angle) * 50,
-                          player.location[1] + math.cos(player.player_angle) * 50), 3)
+        player_loc = (self.coords.from_universe(player.location))  # convert player universe location to screen location
+        pygame.draw.line(self.screen, (49, 20, 179), (player_loc[0], player_loc[1]),
+                         (player_loc[0] - math.sin(player.angle) * 50,
+                          player_loc[1] + math.cos(player.angle) * 50), 3)
 
-        pygame.draw.line(self.screen, (49, 20, 179), (player.location[0], player.location[1]),
-                         (player.location[0] - math.sin(player.player_angle - player.HALF_FOV) * 50,
-                          player.location[1] + math.cos(player.player_angle - player.HALF_FOV) * 50), 3)
+        pygame.draw.line(self.screen, (49, 20, 179), (player_loc[0], player_loc[1]),
+                         (player_loc[0] - math.sin(player.angle - player.HALF_FOV) * 50,
+                          player_loc[1] + math.cos(player.angle - player.HALF_FOV) * 50), 3)
 
-        pygame.draw.line(self.screen, (49, 20, 179), (player.location[0], player.location[1]),
-                         (player.location[0] - math.sin(player.player_angle + player.HALF_FOV) * 50,
-                          player.location[1] + math.cos(player.player_angle + player.HALF_FOV) * 50), 3)
+        pygame.draw.line(self.screen, (49, 20, 179), (player_loc[0], player_loc[1]),
+                         (player_loc[0] - math.sin(player.angle + player.HALF_FOV) * 50,
+                          player_loc[1] + math.cos(player.angle + player.HALF_FOV) * 50), 3)
+
     def cast_rays(self,player):
-
-        start_angle = player.player_angle - player.HALF_FOV
-
+        start_angle = player.angle - player.HALF_FOV
+        player_loc = (self.coords.from_universe(player.location))  # convert player universe location to screen location
         for ray in range(player.CASTED_RAYS):
             for depth in range(self.MAX_DEPTH):
-                target_x = player.location[0] - math.sin(start_angle) * depth
-                target_y = player.location[1] + math.cos(start_angle) * depth
+                target_x = player_loc[0] - math.sin(start_angle) * depth
+                target_y = player_loc[1] + math.cos(start_angle) * depth
 
                 #draw casted ray
-                pygame.draw.line(self.screen, (0, 255, 0), (player.location[0],player.location[1]), (target_x,target_y))
+                pygame.draw.line(self.screen, (0, 255, 0), (player_loc[0],player_loc[1]), (target_x,target_y))
 
             start_angle += player.STEP_ANGLE
-
 
     def adjust_viewport(self, camera):
         c_loc = camera.location
@@ -125,8 +126,9 @@ class Renderer:
 
         # draw
         self.draw(universe.surface_altitudes)
-        self.cast_rays(universe.player)
-        self.draw_fov(universe.player)
+        if universe.mode == "game":
+            self.cast_rays(universe.player)
+            self.draw_fov(universe.player)
         self.draw_player(universe.player)
 
         # EXPERIMENTAL
