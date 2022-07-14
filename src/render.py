@@ -71,29 +71,30 @@ class Renderer:
         pygame.draw.rect(self.screen, self.color, (pos1[0], pos1[1], player_hit_box_x, player_hit_box_y), 0, 1)
 
     def draw_fov(self, player):
-        #direction
+        # direction
+        start_angle = -player.angle
         player_loc = (self.coords.from_universe(player.location))  # convert player universe location to screen location
         pygame.draw.line(self.screen, (49, 20, 179), (player_loc[0], player_loc[1]),
-                         (player_loc[0] - math.sin(player.angle) * 50,
-                          player_loc[1] + math.cos(player.angle) * 50), 3)
+                         (player_loc[0] + math.cos(start_angle) * 50,
+                          player_loc[1] - math.sin(start_angle) * 50), 3)
 
         pygame.draw.line(self.screen, (49, 20, 179), (player_loc[0], player_loc[1]),
-                         (player_loc[0] - math.sin(player.angle - player.HALF_FOV) * 50,
-                          player_loc[1] + math.cos(player.angle - player.HALF_FOV) * 50), 3)
+                         (player_loc[0] + math.cos(start_angle - player.HALF_FOV) * 50,
+                          player_loc[1] - math.sin(start_angle - player.HALF_FOV) * 50), 3)
 
         pygame.draw.line(self.screen, (49, 20, 179), (player_loc[0], player_loc[1]),
-                         (player_loc[0] - math.sin(player.angle + player.HALF_FOV) * 50,
-                          player_loc[1] + math.cos(player.angle + player.HALF_FOV) * 50), 3)
+                         (player_loc[0] + math.cos(start_angle + player.HALF_FOV) * 50,
+                          player_loc[1] - math.sin(start_angle + player.HALF_FOV) * 50), 3)
 
     def cast_rays(self,player):
-        start_angle = player.angle - player.HALF_FOV
+        start_angle = (-player.angle) - player.HALF_FOV
         player_loc = (self.coords.from_universe(player.location))  # convert player universe location to screen location
         for ray in range(player.CASTED_RAYS):
             for depth in range(self.MAX_DEPTH):
-                target_x = player_loc[0] - math.sin(start_angle) * depth
-                target_y = player_loc[1] + math.cos(start_angle) * depth
+                target_x = player_loc[0] + math.cos(start_angle) * depth
+                target_y = player_loc[1] - math.sin(start_angle) * depth
 
-                #draw casted ray
+                # draw casted ray
                 pygame.draw.line(self.screen, (0, 255, 0), (player_loc[0],player_loc[1]), (target_x,target_y))
 
             start_angle += player.STEP_ANGLE
