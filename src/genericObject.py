@@ -1,20 +1,21 @@
 import pygame
 import math
 import cmath
+import shape as sh
 
 
 class GenericObject():
-    def __init__(self, pos, shape="rec"):
+    def __init__(self, pos, shape=sh.Rect(100, 100)):
         self.pos = pos
         self.shape = shape  # type of shape square or circle
         self.color = (0, 250, 0)
-        self.width = 100
-        self.height = 100
+        # self.width = 100  # it is contained in shape class labeled as sh
+        # self.height = 100  # it is contained in shape class labeled as sh
         self.thickness = 0
         self.curve = 0
-        self.draw_map = {"rec":self.draw_rec}
-        self.define_hit_box_map = {"rec":self.define_rec()}
-        self.look = self.define_hit_box_map[self.shape]  # is it rectangle hit-box or circle hit-box
+        self.draw_map = {"rect":self.draw_rec}
+        self.define_hit_box_map = {"rect":self.define_rec()}
+        self.look = self.define_hit_box_map[self.shape.shape_type]  # is it rectangle hit-box or circle hit-box
 
     def get_shape(self):
         return self.shape
@@ -23,7 +24,7 @@ class GenericObject():
         return self.pos
 
     def define_rec(self):
-        return pygame.Rect(self.pos[0], self.pos[1], self.width, self.height)
+        return pygame.Rect(self.pos[0], self.pos[1], self.shape.width, self.shape.height)
 
     # def draw(self, screen_pos, screen):
     #     self.draw_map[self.shape](screen_pos, screen)
@@ -32,15 +33,15 @@ class GenericObject():
     #     pygame.draw.rect(screen, self.color, (screen_pos[0], screen_pos[1], self.width, self.height), self.thickness, self.curve)
 
     def draw(self, converter, screen):
-        self.draw_map[self.shape](converter, screen)
+        self.draw_map[self.shape.shape_type](converter, screen)
 
     def draw_rec(self, converter, screen):
         screen_pos = converter.from_universe(self.pos)
-        pygame.draw.rect(screen, self.color, (screen_pos[0], screen_pos[1], self.width, self.height), self.thickness, self.curve)
+        pygame.draw.rect(screen, self.color, (screen_pos[0], screen_pos[1], self.shape.width, self.shape.height), self.thickness, self.curve)
 
 
 class Static(GenericObject):
-    def __init__(self, pos, shape="rec"):
+    def __init__(self, pos, shape=sh.Rect(100, 100)):
         super(Static, self).__init__(pos, shape)
 
     def update(self, tiles, converter, screen):
@@ -59,7 +60,7 @@ class Static(GenericObject):
 
 
 class Kinetic(GenericObject):
-    def __init__(self, direction, speed, pos, shape="rec"):
+    def __init__(self, direction, speed, pos, shape=sh.Rect(100, 100)):
         super(Kinetic, self).__init__(pos, shape)
         self.direction = direction
         self.speed = speed
@@ -92,7 +93,7 @@ class Kinetic(GenericObject):
 
 
 class CollidableKinetic(Kinetic):
-    def __init__(self, direction, speed, pos, shape="rec"):
+    def __init__(self, direction, speed, pos, shape=sh.Rect(100, 100)):
         super(CollidableKinetic, self).__init__(direction, speed, pos, shape)
         self.collision_map = {"Static":True}
         # self.collision_check_map = {"rec": self.rec_collision_checker}
