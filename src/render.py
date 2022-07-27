@@ -16,6 +16,9 @@ class Renderer:
         self.color = (250,0,0)  # (250,250,250) and (0,0,0)
         self.line_thickness = 5
 
+        # EXPERIMENTAL
+        self.draw_gen_obj_map = {"rect":self.draw_gen_obj_rect, "circle":self.draw_gen_obj_circle}
+
     def set_scale(self, new_scale):
         self.scale = new_scale
         self.coords = CoordConverter(self.scale, self.viewport)
@@ -94,3 +97,17 @@ class Renderer:
         # draw
         self.draw(universe.surface_altitudes)
         self.draw_player(universe.player)
+
+# ===================EXPERIMENTAL===================
+
+    def draw_gen_obj(self, gen_obj_list):
+        for gen_obj in gen_obj_list:
+            self.draw_gen_obj_map[gen_obj.shape.shape_type](gen_obj)
+
+    def draw_gen_obj_rect(self, gen_obj):
+        screen_pos = self.coords.from_universe(gen_obj.pos)
+        pygame.draw.rect(self.screen, gen_obj.render_params.color, (screen_pos[0], screen_pos[1], gen_obj.shape.width, gen_obj.shape.height), gen_obj.render_params.thickness, gen_obj.render_params.curve)
+
+    def draw_gen_obj_circle(self, gen_obj):
+        screen_pos = self.coords.from_universe(gen_obj.pos)
+        pygame.draw.circle(self.screen, gen_obj.render_params.color, screen_pos, gen_obj.shape.radius, gen_obj.render_params.thickness)
