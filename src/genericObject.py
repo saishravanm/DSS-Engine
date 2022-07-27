@@ -7,7 +7,7 @@ class GenericObject():
         self.pos = pos
         self._shape = shape  # type of shape square or circle
         self.render_params_map = {"rect":rp.Rect, "circle":rp.Circle}
-        self._render_params = self.render_params_map[self._shape.shape_type]
+        self._render_params = self.render_params_map[self._shape.shape_type]()
 
     @property
     def shape(self):
@@ -25,7 +25,7 @@ class Static(GenericObject):
     def __init__(self, pos, shape=sh.Rect(100, 100)):
         super(Static, self).__init__(pos, shape)
 
-    def update(self, tiles, converter, screen):
+    def update(self, tiles):
         pass
 
 # class CollidableStatic(Static):
@@ -41,7 +41,7 @@ class Static(GenericObject):
 
 
 class Kinetic(GenericObject):
-    def __init__(self, speed_delta, speed, pos, shape=sh.Rect(100, 100)):
+    def __init__(self, pos, speed, speed_delta, shape=sh.Rect(100, 100)):
         super(Kinetic, self).__init__(pos, shape)
         self.speed_delta = speed_delta
         self.speed = speed
@@ -62,27 +62,23 @@ class Kinetic(GenericObject):
         return (speed_x, speed_y)
 
     def move(self):
-        # ratio = self.direction[0] + self.direction[1]
-        # ratio_speed = (self.speed / ratio)
-        # speed_x = ratio_speed * self.direction[0]
-        # speed_y = ratio_speed * self.direction[1]
         self.pos = (self.pos[0] + self.speed_xy[0], self.pos[1] + self.speed_xy[1])
 
-    def update(self, tiles, converter, screen):  # junk
-        self.move()
+    def update(self, tiles):  # junk
+        if self.speed_delta != (0, 0):
+            self.move()
 
 
 class CollidableKinetic(Kinetic):
 
     collision_map = {Static}
 
-    def __init__(self, direction, speed, pos, shape=sh.Rect(100, 100)):
-        super(CollidableKinetic, self).__init__(direction, speed, pos, shape)
-        # self.collision_check_map = {"rec": self.rec_collision_checker}
+    def __init__(self, pos, speed, speed_delta, shape=sh.Rect(100, 100)):
+        super(CollidableKinetic, self).__init__(pos, speed, speed_delta, shape)
 
-    def update(self, tiles, converter, screen):
+    def update(self, tiles):
         if self.speed_delta != (0, 0):
-            pass
+            self.move()
 
 
 # class NonCollidableKinetic(Kinetic):
