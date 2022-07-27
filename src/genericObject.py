@@ -5,12 +5,17 @@ import renderParams as rp
 class GenericObject():
     def __init__(self, pos, shape=sh.Rect(100, 100)):
         self.pos = pos
-        self.shape = shape  # type of shape square or circle
+        self._shape = shape  # type of shape square or circle
         self.render_params_map = {"rect":rp.Rect, "circle":rp.Circle}
-        self.render_params = self.render_params_map[self.shape.shape_type]
+        self._render_params = self.render_params_map[self._shape.shape_type]
 
-    def get_shape(self):
-        return self.shape
+    @property
+    def shape(self):
+        return self._shape
+
+    @property
+    def render_params(self):
+        return self._render_params
 
     def get_pos(self):
         return self.pos
