@@ -5,6 +5,9 @@ class RenderParams():
         self.params_type = params_type
         self.color = color
 
+        self.colorkey = (0, 0, 0)
+        self.fill = (0, 0, 0)
+
 
 class Rect(RenderParams):
     def __init__(self, thickness=0, curve=0):

@@ -1,10 +1,13 @@
 import shape as sh
 import renderParams as rp
 
+from vectors import Vector2D
+
 
 class GenericObject():
-    def __init__(self, pos, shape=sh.Rect(100, 100)):
+    def __init__(self, pos, angle=0, shape=sh.Rect(100, 100)):
         self.pos = pos
+        self.angle = angle
         self._shape = shape  # type of shape square or circle
         self.render_params_map = {"rect":rp.Rect, "circle":rp.Circle}
         self._render_params = self.render_params_map[self._shape.shape_type]()
@@ -22,8 +25,8 @@ class GenericObject():
 
 
 class Static(GenericObject):
-    def __init__(self, pos, shape=sh.Rect(100, 100)):
-        super(Static, self).__init__(pos, shape)
+    def __init__(self, pos, angle=0, shape=sh.Rect(100, 100)):
+        super(Static, self).__init__(pos, angle, shape)
 
     def update(self, tiles):
         pass
@@ -41,12 +44,18 @@ class Static(GenericObject):
 
 
 class Kinetic(GenericObject):
-    def __init__(self, pos, speed, speed_delta, shape=sh.Rect(100, 100)):
-        super(Kinetic, self).__init__(pos, shape)
+    def __init__(self, pos, speed, speed_delta, angle=0, shape=sh.Rect(100, 100)):
+        super(Kinetic, self).__init__(pos, angle, shape)
         self.speed_delta = speed_delta
         self.speed = speed
         self.color = (250, 0, 0)
         self.speed_xy = self.get_speed_xy()
+
+        self.velocity = Vector2D(0.0, 0.0)
+        self.angular_velocity = 0.0
+
+        self.torque = 0.0
+        self.forces = Vector2D(0.0, 0.0)
 
     def get_direction(self):
         return self.speed_delta
@@ -73,8 +82,8 @@ class CollidableKinetic(Kinetic):
 
     collision_map = {Static}
 
-    def __init__(self, pos, speed, speed_delta, shape=sh.Rect(100, 100)):
-        super(CollidableKinetic, self).__init__(pos, speed, speed_delta, shape)
+    def __init__(self, pos, speed, speed_delta, angle=0, shape=sh.Rect(100, 100)):
+        super(CollidableKinetic, self).__init__(pos, speed, speed_delta, angle, shape)
 
     def update(self, tiles):
         if self.speed_delta != (0, 0):
