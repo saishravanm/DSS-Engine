@@ -17,7 +17,7 @@ class Renderer:
         self.line_thickness = 5
 
         # EXPERIMENTAL
-        self.draw_gen_obj_map = {"rect":self.draw_gen_obj_rect, "circle":self.draw_gen_obj_circle}
+        self.draw_gen_obj_map = {"rect":self.draw_gen_obj_rect_2, "circle":self.draw_gen_obj_circle}
 
     def set_scale(self, new_scale):
         self.scale = new_scale
@@ -111,3 +111,19 @@ class Renderer:
     def draw_gen_obj_circle(self, gen_obj):
         screen_pos = self.coords.from_universe(gen_obj.pos)
         pygame.draw.circle(self.screen, gen_obj.render_params.color, screen_pos, gen_obj.shape.radius, gen_obj.render_params.thickness)
+
+    def draw_gen_obj_rect_2(self, gen_obj):
+        screen_pos = self.coords.from_universe(gen_obj.pos)
+
+        sprite = pygame.Surface((gen_obj.shape.width, gen_obj.shape.height))
+        sprite.set_colorkey(gen_obj.render_params.colorkey)
+        sprite.fill(gen_obj.render_params.fill)
+
+        pygame.draw.rect(sprite, gen_obj.render_params.color, (0, 0, gen_obj.shape.width - 2, gen_obj.shape.height - 2), 2)
+
+        rotated = pygame.transform.rotate(sprite, gen_obj.angle)
+        rect = rotated.get_rect()
+
+        self.screen.blit(rotated, (screen_pos[0] - rect.width / 2, screen_pos[1] - rect.height / 2))
+
+# ==================================================
