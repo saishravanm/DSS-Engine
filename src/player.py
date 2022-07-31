@@ -1,6 +1,9 @@
 import cmath
 import math
 
+# EXPERIMENTAL
+import genericObject
+
 NORM_K = (1 / math.sqrt(2))
 
 
@@ -37,6 +40,9 @@ class Player:
         self.current_speed = 0
         self.angle = 0
 
+        # EXPERIMENTAL
+        self.rigid_body = genericObject.Player(self.location, self.angle)
+
     def move_normalize(self):
         speed_x = round(math.cos(self.angle) * self.current_speed)
         speed_y = round(math.sin(self.angle) * self.current_speed)
@@ -61,7 +67,13 @@ class Player:
         self.angle = cmath.phase(complex(self.rotation[0], self.rotation[1]))
 
     def update(self):
+        # ===================EXPERIMENTAL===================
+        self.location = self.rigid_body.get_pos()
+        # ==================================================
         if self.direction != (0, 0):
             self.angle = self.update_angle()
             self.current_speed = self.update_speed()
             self.move_normalize()
+            # ===================EXPERIMENTAL===================
+            self.rigid_body.set_pos(self.location)
+            # ==================================================

@@ -1,6 +1,11 @@
 from player import Player
 from mouse import Mouse
 
+# EXPERIMENTAL
+import genericObject
+from physics import PhysicsWorld
+from math import inf
+
 
 class Universe:
     def __init__(self):
@@ -16,9 +21,23 @@ class Universe:
         self.pointLeft = (-1,-1)
         self.gravity = -5
 
+        # EXPERIMENTAL
+        self.physics = PhysicsWorld()
+        self.dt = 1/60
+        self.physics.add(self.player.rigid_body)
+        self.physics.add(
+            genericObject.Static((500,500), 0),
+            genericObject.Static((700, 500), 0, genericObject.sh.Rect(50, 50, inf)),
+            genericObject.Spinner((700, 700), 0),
+            genericObject.Spinner((800, 700), 0, genericObject.sh.Rect(150, 10, inf))
+        )
+
     def update(self):  # does something every frame, could be useful for enemy AI or update some values
         if self.mode == "game":
             self.player.update()
+            # ===================EXPERIMENTAL===================
+            self.physics.update(self.dt)
+            # ==================================================
         pass
 
     def setup(self, coords_converter):
