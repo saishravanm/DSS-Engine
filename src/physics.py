@@ -38,7 +38,7 @@ class PhysicsWorld:
         for body in self.bodies:
 
             for other_body in self.bodies:
-                if other_body not in tested and other_body is not body and (body.shape.mass != inf or other_body.shape.mass != inf):
+                if other_body not in tested and other_body is not body and (body.shape.mass != inf or other_body.shape.mass != inf):  # objects with inf mass don't collide with other inf mass objects
                     collision, depth, normal = body.collide(other_body)
 
                     if collision:
