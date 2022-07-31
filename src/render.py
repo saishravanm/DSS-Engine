@@ -124,6 +124,11 @@ class Renderer:
         rotated = pygame.transform.rotate(sprite, gen_obj.angle)
         rect = rotated.get_rect()
 
-        self.screen.blit(rotated, (screen_pos[0] - rect.width / 2, screen_pos[1] - rect.height / 2))
+        # self.screen.blit(rotated, (screen_pos[0] - rect.width / 2, screen_pos[1] - rect.height / 2))
+
+        pygame.draw.line(self.screen, (255, 0, 255), gen_obj.vertices[0], gen_obj.vertices[1])
+        pygame.draw.line(self.screen, (255, 0, 255), gen_obj.vertices[1], gen_obj.vertices[2])
+        pygame.draw.line(self.screen, (255, 0, 255), gen_obj.vertices[2], gen_obj.vertices[3])
+        pygame.draw.line(self.screen, (255, 0, 255), gen_obj.vertices[3], gen_obj.vertices[0])
 
 # ==================================================
