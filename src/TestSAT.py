@@ -31,7 +31,7 @@ world.add(
     # genericObject.GenericObject((700, 300), 0, shape.Rect(200, 100, inf)),
     # genericObject.GenericObject((900, 600), 0, shape.Rect(50, 50, inf)),
     genericObject.Spinner((900, 200), 0, shape.Rect(50, 10, inf)),
-    # genericObject.Static((900, 150), 0, shape.Rect(50, 50, inf))
+    genericObject.Static((900, 150), 0, shape.Rect(50, 50, inf))
 )
 screen_center = Vector2D(screen_size) / 2
 mouse_pos = screen_center
