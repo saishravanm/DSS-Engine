@@ -6,6 +6,8 @@ FOV = math.pi / 3
 HALF_FOV = FOV/2
 CASTED_RAYS = 120
 STEP_ANGLE = FOV / CASTED_RAYS
+
+
 class Player:
     def __init__(self):
         self.state = "standing"
