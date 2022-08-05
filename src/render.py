@@ -130,9 +130,17 @@ class Renderer:
 
         # self.screen.blit(rotated, (screen_pos[0] - rect.width / 2, screen_pos[1] - rect.height / 2))  # useful to draw slides or frames
 
-        pygame.draw.line(self.screen, (255, 0, 255), self.coords.from_universe(gen_obj.vertices[0]), self.coords.from_universe(gen_obj.vertices[1]))
-        pygame.draw.line(self.screen, (255, 0, 255), self.coords.from_universe(gen_obj.vertices[1]), self.coords.from_universe(gen_obj.vertices[2]))
-        pygame.draw.line(self.screen, (255, 0, 255), self.coords.from_universe(gen_obj.vertices[2]), self.coords.from_universe(gen_obj.vertices[3]))
-        pygame.draw.line(self.screen, (255, 0, 255), self.coords.from_universe(gen_obj.vertices[3]), self.coords.from_universe(gen_obj.vertices[0]))
+        # pygame.draw.line(self.screen, (255, 0, 255), self.coords.from_universe(gen_obj.vertices[0]), self.coords.from_universe(gen_obj.vertices[1]))
+        # pygame.draw.line(self.screen, (255, 0, 255), self.coords.from_universe(gen_obj.vertices[1]), self.coords.from_universe(gen_obj.vertices[2]))
+        # pygame.draw.line(self.screen, (255, 0, 255), self.coords.from_universe(gen_obj.vertices[2]), self.coords.from_universe(gen_obj.vertices[3]))
+        # pygame.draw.line(self.screen, (255, 0, 255), self.coords.from_universe(gen_obj.vertices[3]), self.coords.from_universe(gen_obj.vertices[0]))
+        pygame.draw.line(self.screen, gen_obj.render_params.color, self.coords.from_universe(gen_obj.vertices[0]),
+                         self.coords.from_universe(gen_obj.vertices[1]))
+        pygame.draw.line(self.screen, gen_obj.render_params.color, self.coords.from_universe(gen_obj.vertices[1]),
+                         self.coords.from_universe(gen_obj.vertices[2]))
+        pygame.draw.line(self.screen, gen_obj.render_params.color, self.coords.from_universe(gen_obj.vertices[2]),
+                         self.coords.from_universe(gen_obj.vertices[3]))
+        pygame.draw.line(self.screen, gen_obj.render_params.color, self.coords.from_universe(gen_obj.vertices[3]),
+                         self.coords.from_universe(gen_obj.vertices[0]))
 
 # ==================================================

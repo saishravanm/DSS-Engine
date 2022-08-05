@@ -42,6 +42,12 @@ class PhysicsWorld:
                     collision, depth, normal = body.collide(other_body)
 
                     if collision:
+
+                        # EXPERIMENTAL
+                        body.react(other_body)
+                        other_body.react(body)
+                        # ============
+
                         normal = normal.normalize()
 
                         rel_vel = (body.velocity - other_body.velocity)
