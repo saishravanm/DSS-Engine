@@ -98,6 +98,10 @@ class GenericObject():
     def update(self, dt):
         pass
 
+    # EXPERIMENTAL
+    def react(self, other_body):
+        pass
+
 
 class Static(GenericObject):
     def __init__(self, pos, angle=0, shape=sh.Rect(100, 100)):
@@ -165,3 +169,21 @@ class Player(GenericObject):
 
     def update(self, dt):
         pass
+
+
+class TouchMe(GenericObject):
+    def __init__(self, pos, angle=0, shape=sh.Rect(100, 100)):
+        super(TouchMe, self).__init__(pos, angle, shape)
+        # self.pressed = False
+
+    def react(self, other_body):
+        print("Doing Magic")
+        print(type(other_body))
+        if type(other_body) == type(Player):
+            # self.pressed = True
+            print(1)
+            self.render_params.color = (250, 0, 0)
+        else:
+            # self.pressed = False
+            print(2)
+            self.render_params.color = (250, 250, 250)
