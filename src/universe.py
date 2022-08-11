@@ -5,7 +5,7 @@ from mouse import Mouse
 import genericObject
 from physics import PhysicsWorld
 from math import inf
-
+from fileman import Fileman
 
 class Universe:
     def __init__(self):
@@ -21,6 +21,8 @@ class Universe:
         self.pointLeft = (-1,-1)
         self.gravity = -5
 
+        #FILE MAN
+        self.fileman = Fileman()
         # EXPERIMENTAL
         self.physics = PhysicsWorld()
         self.dt = 1/60
@@ -40,6 +42,10 @@ class Universe:
             # ===================EXPERIMENTAL===================
             self.physics.update(self.dt)
             # ==================================================
+
+            # ===================FILEMAN EXPERIMENTAL===================
+            self.fileman.scene_writer(self.fileman.def_file)
+            # ==========================================================
         pass
 
     def setup(self, coords_converter):
