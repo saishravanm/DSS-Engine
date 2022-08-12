@@ -3,16 +3,17 @@ import math
 
 # EXPERIMENTAL
 import genericObject
-
+from fileman import Fileman
 NORM_K = (1 / math.sqrt(2))
 FOV = math.pi / 3
 HALF_FOV = FOV/2
 CASTED_RAYS = 120
 STEP_ANGLE = FOV / CASTED_RAYS
-
+save = False;
 
 class Player:
     def __init__(self):
+        self.fileman = Fileman()
         self.state = "standing"
         self.location = (0, 0)
         self.speed = 5
@@ -79,6 +80,55 @@ class Player:
         # ===================EXPERIMENTAL===================
         self.location = self.rigid_body.get_pos()
         # ==================================================
+
+        ################################FILEMAN TEST##################################################
+
+
+
+        self.fileman.scene_writer("defSave.dsave", "player_state=", "player_state=" + " " + self.state)
+        self.fileman.scene_writer("defSave.dsave", "player_location_x=",
+                                      "player_location_x=" + " " + str(self.location[0]))
+        self.fileman.scene_writer("defSave.dsave", "player_location_y=",
+                                      "player_location_y=" + " " + str(self.location[1]))
+        self.fileman.scene_writer("defSave.dsave", "player_speed=", "player_speed=" + " " + str(self.speed))
+        self.fileman.scene_writer("defSave.dsave", "player_sprint=", "player_sprint=" + " " + str(self.sprint))
+        self.fileman.scene_writer("defSave.dsave", "player_walk=", "player_walk=" + " " + str(self.walk))
+        self.fileman.scene_writer("defSave.dsave", "player_crouch_speed=",
+                                      "player_crouch_speed=" + " " + str(self.crouch_speed))
+        self.fileman.scene_writer("defSave.dsave", "player_walk_speed=",
+                                      "player_walk_speed=" + " " + str(self.walk_speed))
+        self.fileman.scene_writer("defSave.dsave", "player_sprint_speed=",
+                                      "player_sprint_speed=" + " " + str(self.sprint_speed))
+        self.fileman.scene_writer("defSave.dsave", "player_run_multiplayer=",
+                                      "player_run_multiplayer=" + " " + str(self.run_multiplayer))
+        self.fileman.scene_writer("defSave.dsave", "player_crouch_multiplayer=",
+                                      "player_crouch_multiplayer=" + " " + str(self.crouch_multiplayer))
+        self.fileman.scene_writer("defSave.dsave", "player_walk_multiplayer=",
+                                      "player_walk_multiplayer=" + " " + str(self.walk_multiplayer))
+        self.fileman.scene_writer("defSave.dsave", "player_crouch_on=",
+                                      "player_crouch_on=" + " " + str(self.crouch_on))
+        self.fileman.scene_writer("defSave.dsave", "player_crouch_off=",
+                                      "player_crouch_off=" + " " + str(self.crouch_off))
+        self.fileman.scene_writer("defSave.dsave", "player_run_on=", "player_run_on=" + " " + str(self.run_on))
+        self.fileman.scene_writer("defSave.dsave", "player_run_off=", "player_run_off=" + " " + str(self.run_off))
+        self.fileman.scene_writer("defSave.dsave", "player_velocity=",
+                                      "player_velocity=" + " " + str(self.velocity))
+        self.fileman.scene_writer("defSave.dsave", "player_gravity_acceleration=",
+                                      "player_gravity_acceleration=" + " " + str(self.gravity_acceleration))
+        self.fileman.scene_writer("defSave.dsave", "player_direction_h=",
+                                      "player_direction_h=" + " " + str(self.direction_h))
+        self.fileman.scene_writer("defSave.dsave", "player_direction_y=",
+                                      "player_direction_y=" + " " + str(self.direction_y))
+        self.fileman.scene_writer("defSave.dsave", "player_run=", "player_run=" + " " + str(self.run))
+        self.fileman.scene_writer("defSave.dsave", "player_direction=",
+                                      "player_direction=" + " " + str(self.direction))
+        self.fileman.scene_writer("defSave.dsave", "player_rotation=",
+                                      "player_rotation=" + " " + str(self.rotation))
+        self.fileman.scene_writer("defSave.dsave", "player_angle=", "player_angle=" + " " + str(self.angle))
+        self.fileman.scene_writer("defSave.dsave", "player_player_angle=",
+                                      "player_player_angle=" + " " + str(self.player_angle))
+
+        ######################################################################################################
         if self.direction != (0, 0):
             self.angle = self.update_angle()
             self.current_speed = self.update_speed()

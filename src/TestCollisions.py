@@ -1,6 +1,6 @@
 # setup #
 import pygame, sys
-
+import player, camera
 # setup pygame/window #
 mainClock = pygame.time.Clock()
 from pygame.locals import *

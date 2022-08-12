@@ -92,7 +92,7 @@ class Renderer:
     def cast_rays(self,player):
         start_angle = (-player.angle) - player.HALF_FOV
         player_loc = (self.coords.from_universe(player.location))  # convert player universe location to screen location
-        for ray in range(player.CASTED_RAYS):
+        for ray in range(10):
             for depth in range(self.MAX_DEPTH):
                 target_x = player_loc[0] + math.cos(start_angle) * depth
                 target_y = player_loc[1] - math.sin(start_angle) * depth

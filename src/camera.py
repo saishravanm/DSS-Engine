@@ -1,10 +1,11 @@
 import math
 import cmath
-
-
+from fileman import Fileman
+import player
 class Camera():
     def __init__(self, location, player_location=(0, 0), camera_type="follow_strict"):
         # free parameters
+        self.fileman = Fileman()
         self.location = location
         self.player_location = player_location
         self.camera_type = camera_type
@@ -21,6 +22,15 @@ class Camera():
         return (round(location[0]), round(location[1]))
 
     def update(self, universe):
+
+        ##############################EXPERIMENTAL FILEMAN#######################################################
+        self.fileman.scene_writer("defSave.dsave", "camera_location_x=", "camera_location_x=" + " " + str(self.location[0]))
+        self.fileman.scene_writer("defSave.dsave", "camera_location_x=", "camera_location_x=" + " " + str(self.location[1]))
+        self.fileman.scene_writer("defSave.dsave", "camera_type=", "camera_type=" + " " + self.camera_type)
+        self.fileman.scene_writer("defSave.dsave", "camera_self_allowed_radius=", "camera_self_allowed_radius=" + " " + str(self.allowed_radius))
+        self.fileman.scene_writer("defSave.dsave", "camera_height=", "camera_height=" + " " + str(self.height))
+        self.fileman.scene_writer("defSave.dsave", "camera_width=", "camera_width=" + " " + str(self.width))
+        #########################################################################################################
         if self.camera_type == "follow_strict":
             self.player_location = universe.player.location
             self.adjust_camera_strict()

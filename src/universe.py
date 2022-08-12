@@ -44,7 +44,6 @@ class Universe:
             # ==================================================
 
             # ===================FILEMAN EXPERIMENTAL===================
-            self.fileman.scene_writer(self.fileman.def_file)
             # ==========================================================
         pass
 
