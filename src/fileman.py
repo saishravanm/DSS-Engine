@@ -6,6 +6,8 @@ class Fileman():
         self.def_file = open("defSave.dsave", "r") #root save file
         self.file_list = [] #list of all input files
         self.loadOrder = 0 #current index of file that is loaded
+        self.savepoint = (0,0)
+        self.savepoint_reached = False
     def create_file(self,filename):
         f = open(filename, "w")
         self.file_list.__add__(f)
@@ -20,6 +22,10 @@ class Fileman():
 
         with open(filename, 'w') as file:
             file.write(data)
+    def write_save_point(self, location):
+        self.savepoint = location
 
-
+    def check_save_point(self, player):
+        if(player.location==self.savepoint):
+            self.savepoint_reached = True
 
