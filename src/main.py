@@ -28,6 +28,7 @@ universe = Universe()
 # coords = CoordConverter(scale, ((0,0), display))  # here you can scale and modify out put on the display
 render = Renderer(screen, ((0,0), display), scale)
 fileman = Fileman()
+fileman.create_file("save1")
 
 def main_loop():
     translator = Translator(settings.TRANSLATION_MAP, DoneAction())

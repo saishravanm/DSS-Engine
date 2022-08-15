@@ -10,7 +10,7 @@ class Fileman():
         self.savepoint_reached = False
     def create_file(self,filename):
         f = open(filename, "w")
-        self.file_list.__add__(f)
+        self.file_list.append(f)
     def increment_load_order(self, num):
         self.loadOrder += num
     def scene_writer(self, filename,searchtext,replacetext):
@@ -22,6 +22,7 @@ class Fileman():
 
         with open(filename, 'w') as file:
             file.write(data)
+
     def write_save_point(self, location):
         self.savepoint = location
 
@@ -29,3 +30,6 @@ class Fileman():
         if(player.location==self.savepoint):
             self.savepoint_reached = True
 
+    def clear_save(self, filename):
+        with open(filename, "r+") as f:
+            f.truncate(0)
