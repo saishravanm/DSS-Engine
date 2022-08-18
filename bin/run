@@ -2,7 +2,7 @@
 
 cd $(dirname $0)/..
 
-CURRENT_ENV=$(python -c 'import sys; print(sys.prefix)')
+CURRENT_ENV=$(python3 -c 'import sys; print(sys.prefix)')
 
 if [ ! "${CURRENT_ENV}" = "$(pwd)/env" ]
 then
