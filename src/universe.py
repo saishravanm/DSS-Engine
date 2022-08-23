@@ -9,29 +9,29 @@ from math import inf
 
 class Universe:
     def __init__(self):
-        self.surface_altitudes = [((100,100),(500,100))]
+        self.surface_altitudes = [((100, 100), (500, 100))]
         self.collision_points = []
         self.player = Player()
         self.mouse = Mouse()
         self.mode = "map"
         self.buildMode = "line"
-        self.mouse_coords = (0,0)
-        self.pointPressed = (-1,-1)
-        self.pointZero = (-1,-1)
-        self.pointLeft = (-1,-1)
+        self.mouse_coords = (0, 0)
+        self.pointPressed = (-1, -1)
+        self.pointZero = (-1, -1)
+        self.pointLeft = (-1, -1)
         self.gravity = -5
 
         # EXPERIMENTAL
         self.physics = PhysicsWorld()
-        self.dt = 1/60
+        self.dt = 1 / 60
         self.physics.add(self.player.rigid_body)
         self.physics.add(
-            genericObject.Static((500,500), 0),
+            genericObject.Static((500, 500), 0),
             genericObject.Static((700, 500), 0, genericObject.sh.Rect(50, 50, inf)),
             genericObject.Spinner((700, 700), 0),
             genericObject.Spinner((800, 700), 0, genericObject.sh.Rect(150, 10, inf)),
             genericObject.Spinner((950, 700), 0, genericObject.sh.Rect(150, 10, inf)),
-            genericObject.TouchMe((500,100), 0, genericObject.sh.Rect(100, 100, inf))
+            genericObject.TouchMe((500, 100), 0, genericObject.sh.Rect(100, 100, inf))
         )
 
     def update(self):  # does something every frame, could be useful for enemy AI or update some values

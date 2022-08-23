@@ -71,7 +71,9 @@ class Renderer:
         pos1 = self.coords.from_universe(player.location)
         player_hit_box_x = player.hit_box[0] / self.scale[0]
         player_hit_box_y = player.hit_box[1] / self.scale[1]
+
         pygame.draw.rect(self.screen, self.color, (pos1[0], pos1[1], player_hit_box_x, player_hit_box_y), 0, 1)
+        #self.screen.blit(player.return_image(),(pos1[0],pos1[1]))
 
     def draw_fov(self, player):
         # direction

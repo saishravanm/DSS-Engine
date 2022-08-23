@@ -1,6 +1,7 @@
 import cmath
 import math
-
+from sprite import Sprite
+import pygame
 # EXPERIMENTAL
 import genericObject
 
@@ -13,6 +14,9 @@ STEP_ANGLE = FOV / CASTED_RAYS
 
 class Player:
     def __init__(self):
+        self.animation = []
+        self.animation_clock = pygame.time.Clock()
+        #self.sprite = Sprite("defaultSprite.png",self.animation,self.animation_clock)
         self.state = "standing"
         self.location = (0, 0)
         self.speed = 5
