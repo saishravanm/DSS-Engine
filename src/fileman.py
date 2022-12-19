@@ -1,6 +1,7 @@
 import pygame
 import sys
 import player
+from node import Node
 class Fileman():
     def __init__(self):
         self.def_file = open("defSave.dsave", "r") #root save file
@@ -13,6 +14,8 @@ class Fileman():
         self.file_list.append(f)
     def increment_load_order(self, num):
         self.loadOrder += num
+    def load_level(self, num):
+        self.loadOrder = num
     def scene_writer(self, filename,searchtext,replacetext):
 
         with open(filename,'r') as file:
@@ -33,3 +36,14 @@ class Fileman():
     def clear_save(self, filename):
         with open(filename, "r+") as f:
             f.truncate(0)
+class save_tree():
+    root = None
+    def insert(self, l, o,):
+        node = Node(l, o)
+        if(self.root == None):
+            self.root = node
+            return
+        prev = None
+        temp = self.root
+        while(temp != None)
+            if(temp.val > )

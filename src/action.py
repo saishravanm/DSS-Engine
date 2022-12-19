@@ -125,3 +125,13 @@ class ZoomOut(Action):  # TODO fix: a fraction to whole number conversion so pos
     def change_universe(self, universe, render):
         if render.scale != (1,1):
             render.add_scale((-0.01,-0.01))
+
+
+class ChangeLevel(Action):
+    def __init__(self, Level):
+        self.Level = Level
+    def change_universe(self, universe, render):
+       universe.fileman.load_level(self.Level)
+
+
+
