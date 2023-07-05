@@ -48,7 +48,8 @@ class PhysicsWorld:
         for group in self.groups:
             collision, depth, normal = group.collide(self.player)
             if collision:
-                test_groups.append(group)
+                if group.bodies:
+                    test_groups.append(group)
 
         print(len(test_groups))
         other_body = self.player
