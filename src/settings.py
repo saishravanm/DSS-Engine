@@ -54,8 +54,8 @@ TRANSLATION_MAP = {
             # pygame.K_RIGHT: DebugAction("Pressed Right"),
             pygame.K_RIGHT: PressedArrowH(1),
             pygame.K_g: OnOffGrid(),
-            pygame.K_1: ChangeBodie("group"),
-            pygame.K_2: ChangeBodie("bodie"),
+            pygame.K_1: ChangeGroup(),
+            pygame.K_2: ChangeBodie(),
         },
         'key_not_pressed': {
             # add some methods that are executed when key is not pressed
@@ -63,11 +63,11 @@ TRANSLATION_MAP = {
         'key_down': {
             # add some methods that are executed when key is down pressed
             pygame.K_e: ChangeModeAction("game"),
-            pygame.K_q: StartBodie(),
+            pygame.K_q: Click(),
         },
         'key_up': {
             # add some methods that are executed when key is up pressed
-            pygame.K_q: FinishBodie(),
+            pygame.K_q: Unclick(),
         },
         'mouse_pressed': {
             # add some methods that are executed when mouse key is pressed

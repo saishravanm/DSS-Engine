@@ -133,21 +133,32 @@ class OnOffGrid(Action):  # turns on/off grid for building maps
 
 
 class ChangeBodie(Action):
-    def __init__(self, bodie_type):
-        self.bodie_type = bodie_type
-
     def change_universe(self, universe, render):
-        universe.edit.bodie_type = bodie_type
+        universe.edit.set_bodie()
 
 
-class StartBodie(Action):
+class ChangeGroup(Action):
+    def change_universe(self, universe, render):
+        universe.edit.set_group()
+
+class Click(Action):
+    def change_universe(self, universe, render):
+        map_list = {"group":StartGroup().change_universe}
+        map_list[universe.edit.bodie_type](universe, render)
+
+class Unclick(Action):
+    def change_universe(self, universe, render):
+        map_list = {"group":FinishGroup().change_universe}
+        map_list[universe.edit.bodie_type](universe, render)
+
+class StartGroup(Action):
     def change_universe(self, universe, render):
         universe.edit.start = (universe.mouse.location[0], universe.mouse.location[1])
 
 
-class FinishBodie(Action):
+class FinishGroup(Action):
     def change_universe(self, universe, render):
         width = universe.mouse.location[0] - universe.edit.start[0]
         height = universe.mouse.location[1] - universe.edit.start[1]
         pos = (universe.edit.start[0] + width/2, universe.edit.start[1] + height/2)
-        universe.add_bodie(pos, 0, width, height)
+        universe.add_group(pos, 0, width, height)

@@ -25,7 +25,6 @@ class Universe:
         # EXPERIMENTAL
         self.edit = Edit()
         self.physics = PhysicsWorld()
-        self.bodie_map = {"group":self.add_group}
         self.dt = 1/60
         #self.physics.add(self.player.rigid_body)
         self.physics.player = self.player.rigid_body
@@ -47,9 +46,6 @@ class Universe:
                 genericObject.Static((250, 250), 0, genericObject.sh.Rect(50, 50, inf))
             )
         )
-
-    def add_bodie(self, pos, angle, width, height):
-        self.bodie_map[self.edit.bodie_type](pos, angle, width, height)
 
     def add_group(self, pos, angle, width, height):
         self.physics.add_groups(genericObject.Group(pos, angle, genericObject.sh.Rect(width, height, inf)))
