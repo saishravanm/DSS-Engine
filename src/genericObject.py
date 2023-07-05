@@ -187,3 +187,15 @@ class TouchMe(GenericObject):
             # self.pressed = False
             print(2)
             self.render_params.color = (250, 250, 250)
+
+class Group(GenericObject):
+    def __init__(self, pos, angle=0, shape=sh.Rect(100, 100), *bodies):
+        super(Group, self).__init__(pos, angle, shape)
+        self.bodies = []
+        self.add(*bodies)
+
+    def add(self, *bodies):
+        self.bodies += bodies
+        for body in bodies:
+            print("Body added", id(body))
+

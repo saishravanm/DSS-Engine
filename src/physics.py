@@ -23,6 +23,14 @@ def line_intersection(line1, line2):  # maybe get rid of Vector2D component
 class PhysicsWorld:
     def __init__(self):
         self.bodies = []
+        self.groups = []
+        self.objs = []
+        self.player = None
+
+    def add_groups(self, *groups):
+        self.groups += groups
+        for group in groups:
+            print("Group added", id(group))
 
     def add(self, *bodies):
         self.bodies += bodies
@@ -35,9 +43,18 @@ class PhysicsWorld:
 
     def update(self, dt):
         tested = []
-        for body in self.bodies:
+        test_groups = []
 
-            for other_body in self.bodies:
+        for group in self.groups:
+            collision, depth, normal = group.collide(self.player)
+            if collision:
+                test_groups.append(group)
+
+        other_body = self.player
+
+        for group in test_groups:
+            for body in group.bodies:
+                print(type(body))
                 if other_body not in tested and other_body is not body and (body.shape.mass != inf or other_body.shape.mass != inf):  # objects with inf mass don't collide with other inf mass objects
                     collision, depth, normal = body.collide(other_body)
 
