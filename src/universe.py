@@ -38,6 +38,10 @@ class Universe:
             genericObject.Group((100, 100), 0, genericObject.sh.Rect(200, 200, inf),
                 genericObject.Static((100, 100), 0, genericObject.sh.Rect(100, 100, inf)),
                 genericObject.Static((50, 50), 0, genericObject.sh.Rect(50, 50, inf))
+            ),
+            genericObject.Group((400, 200), 0, genericObject.sh.Rect(400, 400, inf),
+                genericObject.Static((400, 200), 0, genericObject.sh.Rect(100, 100, inf)),
+                genericObject.Static((250, 250), 0, genericObject.sh.Rect(50, 50, inf))
             )
         )
 
