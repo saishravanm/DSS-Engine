@@ -3,6 +3,7 @@ from mouse import Mouse
 
 # EXPERIMENTAL
 import genericObject
+from edit import Edit
 from physics import PhysicsWorld
 from math import inf
 
@@ -22,7 +23,9 @@ class Universe:
         self.gravity = -5
 
         # EXPERIMENTAL
+        self.edit = Edit()
         self.physics = PhysicsWorld()
+        self.bodie_map = {"group":self.add_group}
         self.dt = 1/60
         #self.physics.add(self.player.rigid_body)
         self.physics.player = self.player.rigid_body
@@ -45,6 +48,12 @@ class Universe:
             )
         )
 
+    def add_bodie(self, pos, angle, width, height):
+        self.bodie_map[self.edit.bodie_type](pos, angle, width, height)
+
+    def add_group(self, pos, angle, width, height):
+        self.physics.add_groups(genericObject.Group(pos, angle, genericObject.sh.Rect(width, height, inf)))
+
     def update(self):  # does something every frame, could be useful for enemy AI or update some values
         if self.mode == "game":
             self.player.update()
@@ -54,7 +63,8 @@ class Universe:
         pass
 
     def setup(self, coords_converter):
+        self.mouse.setup(coords_converter)
         if self.mode == "game":
-            self.mouse.setup(coords_converter)
+            #self.mouse.setup(coords_converter)
             self.player.setup(self.mouse.location)
         pass
