@@ -18,7 +18,7 @@ class Renderer:
         self.MAX_DEPTH = 1000
 
         # EXPERIMENTAL
-        self.draw_gen_obj_map = {"rect":self.draw_gen_obj_rect_2, "circle":self.draw_gen_obj_circle}
+        self.draw_gen_obj_map = {"rect":self.draw_poly, "circle":self.draw_gen_obj_circle}
 
     def set_scale(self, new_scale):
         self.scale = new_scale
@@ -127,9 +127,9 @@ class Renderer:
 
         # draw
         self.draw(universe.surface_altitudes)
-        if universe.mode == "game":
-            self.cast_rays(universe.player)
-            self.draw_fov(universe.player)
+        #if universe.mode == "game":
+        #    self.cast_rays(universe.player)
+        #    self.draw_fov(universe.player)
         self.draw_player(universe.player)
 
         # EXPERIMENTAL
@@ -175,5 +175,12 @@ class Renderer:
                          self.coords.from_universe(gen_obj.vertices[3]))
         pygame.draw.line(self.screen, gen_obj.render_params.color, self.coords.from_universe(gen_obj.vertices[3]),
                          self.coords.from_universe(gen_obj.vertices[0]))
+
+    def draw_poly(self, gen_obj):
+        screen_pos = self.coords.from_universe(gen_obj.pos)
+        points = []
+        for point in gen_obj.vertices:
+            points.append(self.coords.from_universe(point))
+        pygame.draw.polygon(self.screen, gen_obj.render_params.color, points, 1)
 
 # ==================================================

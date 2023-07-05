@@ -134,7 +134,7 @@ class Kinetic(GenericObject):
         self.angular_velocity += angular_acceleration * dt
         self.angle += self.angular_velocity * dt
 
-        self.reset()
+        #self.reset()
 
 
 class CollidableKinetic(Kinetic):

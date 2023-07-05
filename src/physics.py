@@ -1,3 +1,4 @@
+import time
 from vectors import Vector2D
 from math import copysign, inf
 
@@ -34,21 +35,50 @@ class PhysicsWorld:
         print("Body removed", id(body))
 
     def update(self, dt):
+        start = time.time()
         tested = []
+
+        def timer(name):
+            def watch(f):
+                start = time.time()
+                try:
+                    return f()
+                finally:
+                    end = time.time()
+                    watch.spent = end - start
+            watch.spent = 0
+            watch.print = lambda: print("%s time: %s" % (name, watch.spent))
+            return watch
+
+        t0 = 0
+        t1 = timer("Experimental")
+        t2 = timer("Normalize")
+        t3 = timer("Collision")
+        t4 = timer("Other Collision")
+        t5 = timer("Intersection")
+
         for body in self.bodies:
 
             for other_body in self.bodies:
                 if other_body not in tested and other_body is not body and (body.shape.mass != inf or other_body.shape.mass != inf):  # objects with inf mass don't collide with other inf mass objects
+                    start1 = time.time()
                     collision, depth, normal = body.collide(other_body)
+                    end1 = time.time()
+                    #print("SAT time: ", end1 - start1)
+                    t0 += end1 - start1
+                    if t0 > 0.005:
+                        break 
 
                     if collision:
 
                         # EXPERIMENTAL
-                        body.react(other_body)
-                        other_body.react(body)
+                        def timed1():
+                            body.react(other_body)
+                            other_body.react(body)
+                        t1(timed1)
                         # ============
 
-                        normal = normal.normalize()
+                        normal = t2(lambda: normal.normalize())
 
                         rel_vel = (body.velocity - other_body.velocity)
                         j = -(1 + body.shape.restitution) * rel_vel.dot(normal) / normal.dot(
@@ -65,9 +95,13 @@ class PhysicsWorld:
                         body.velocity = body.velocity + j / body.shape.mass * normal
                         other_body.velocity = other_body.velocity - j / other_body.shape.mass * normal
 
-                        body_collision_edge = body.get_collision_edge(-direction)
-                        other_body_collision_edge = other_body.get_collision_edge(direction)
-                        contact_point = line_intersection(body_collision_edge, other_body_collision_edge)
+                        start1 = time.time()
+                        body_collision_edge = t3(lambda: body.get_collision_edge(-direction))
+                        other_body_collision_edge = t4(lambda: other_body.get_collision_edge(direction))
+                        end1 = time.time()
+                        #print("Find edges time: ", end1 - start1)
+
+                        contact_point = t5(lambda: line_intersection(body_collision_edge, other_body_collision_edge))
 
                         if contact_point:
                             radius = (body.pos - contact_point)
@@ -77,5 +111,16 @@ class PhysicsWorld:
                             other_body.angular_velocity = other_body.angular_velocity - (
                                 radius.dot(j * normal / other_body.shape.inertia))
 
+            if t0 > 0.005:
+                break
+
             tested.append(body)
             body.update(dt)
+        end = time.time()
+
+        t1.print()
+        t2.print()
+        t3.print()
+        t4.print()
+        t5.print()
+        print ("Total time: ", end - start)

@@ -31,7 +31,8 @@ class Universe:
             genericObject.Spinner((700, 700), 0),
             genericObject.Spinner((800, 700), 0, genericObject.sh.Rect(150, 10, inf)),
             genericObject.Spinner((950, 700), 0, genericObject.sh.Rect(150, 10, inf)),
-            genericObject.TouchMe((500,100), 0, genericObject.sh.Rect(100, 100, inf))
+            genericObject.TouchMe((500,100), 0, genericObject.sh.Rect(100, 100, inf)),
+            genericObject.Kinetic((500, 250), 0)
         )
 
     def update(self):  # does something every frame, could be useful for enemy AI or update some values
