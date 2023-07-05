@@ -50,6 +50,7 @@ class PhysicsWorld:
             if collision:
                 test_groups.append(group)
 
+        print(len(test_groups))
         other_body = self.player
 
         for group in test_groups:

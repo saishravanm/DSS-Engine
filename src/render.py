@@ -131,11 +131,17 @@ class Renderer:
         #    self.cast_rays(universe.player)
         #    self.draw_fov(universe.player)
         self.draw_player(universe.player)
+        self.draw_gen_obj_rect_2(universe.player.rigid_body)  # this is stupid, I will fix it latter
 
         # EXPERIMENTAL
-        self.draw_gen_obj(universe.physics.bodies)
+        #self.draw_gen_obj(universe.physics.bodies)
+        self.draw_groups(universe.physics.groups)
 
 # ===================EXPERIMENTAL===================
+    def draw_groups(self, groups_list):
+        for group in groups_list:
+            self.draw_gen_obj_map[group.shape.shape_type](group)
+            self.draw_gen_obj(group.bodies) 
 
     def draw_gen_obj(self, gen_obj_list):
         for gen_obj in gen_obj_list:

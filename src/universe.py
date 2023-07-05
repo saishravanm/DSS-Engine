@@ -36,7 +36,7 @@ class Universe:
         #)
         self.physics.add_groups(
             genericObject.Group((100, 100), 0, genericObject.sh.Rect(200, 200, inf),
-                genericObject.Static((100, 100), 0),
+                genericObject.Static((100, 100), 0, genericObject.sh.Rect(100, 100, inf)),
                 genericObject.Static((50, 50), 0, genericObject.sh.Rect(50, 50, inf))
             )
         )
