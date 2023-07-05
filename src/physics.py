@@ -54,7 +54,6 @@ class PhysicsWorld:
 
         for group in test_groups:
             for body in group.bodies:
-                print(type(body))
                 if other_body not in tested and other_body is not body and (body.shape.mass != inf or other_body.shape.mass != inf):  # objects with inf mass don't collide with other inf mass objects
                     collision, depth, normal = body.collide(other_body)
 
