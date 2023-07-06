@@ -141,15 +141,40 @@ class ChangeGroup(Action):
     def change_universe(self, universe, render):
         universe.edit.set_group()
 
+
+class ChangeSelectGroup(Action):
+    def change_universe(self, universe, render):
+        universe.edit.set_select_group()
+
+
 class Click(Action):
     def change_universe(self, universe, render):
-        map_list = {"group":StartGroup().change_universe}
-        map_list[universe.edit.bodie_type](universe, render)
+        map_list = {
+            "group":StartGroup().change_universe, 
+            "bodie":StartBodie().change_universe, 
+            "select_group":SelectGroup().change_universe,
+        }
+
+        if map_list.get(universe.edit.bodie_type):
+            map_list[universe.edit.bodie_type](universe, render)
+
 
 class Unclick(Action):
     def change_universe(self, universe, render):
-        map_list = {"group":FinishGroup().change_universe}
-        map_list[universe.edit.bodie_type](universe, render)
+        map_list = {
+            "group":FinishGroup().change_universe, 
+            "bodie":FinishBodie().change_universe
+        }
+
+        if map_list.get(universe.edit.bodie_type):
+            map_list[universe.edit.bodie_type](universe, render)
+
+
+class SelectGroup(Action):
+    def change_universe(self, universe, render):
+        print("finding group")
+        universe.find_selected_group()
+
 
 class StartGroup(Action):
     def change_universe(self, universe, render):
@@ -162,3 +187,22 @@ class FinishGroup(Action):
         height = universe.mouse.location[1] - universe.edit.start[1]
         pos = (universe.edit.start[0] + width/2, universe.edit.start[1] + height/2)
         universe.add_group(pos, 0, width, height)
+
+
+class StartBodie(Action):
+    def change_universe(self, universe, render):
+        if universe.edit.main_group:
+            universe.edit.start = (universe.mouse.location[0], universe.mouse.location[1])
+        else:
+            print("ERROR: empty group. Choose group first")
+
+class FinishBodie(Action):
+    def change_universe(self, universe, render):
+        if universe.edit.main_group:
+            width = universe.mouse.location[0] - universe.edit.start[0]
+            height = universe.mouse.location[1] - universe.edit.start[1]
+            pos = (universe.edit.start[0] + width/2, universe.edit.start[1] + height/2)
+            universe.add_bodie_to_group(pos, 0, width, height)
+        else:
+            print("ERROR: empty group. Choose group first")
+

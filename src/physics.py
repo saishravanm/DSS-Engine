@@ -41,6 +41,14 @@ class PhysicsWorld:
         self.bodies.remove(body)
         print("Body removed", id(body))
 
+    def find_selected_group(self, bodie):
+        for group in self.groups:
+            collision, depth, normal = group.collide(bodie)
+            if collision:
+                print("Found")
+                return group
+        return None
+
     def update(self, dt):
         tested = []
         test_groups = []

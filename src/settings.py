@@ -56,6 +56,7 @@ TRANSLATION_MAP = {
             pygame.K_g: OnOffGrid(),
             pygame.K_1: ChangeGroup(),
             pygame.K_2: ChangeBodie(),
+            pygame.K_3: ChangeSelectGroup(),
         },
         'key_not_pressed': {
             # add some methods that are executed when key is not pressed

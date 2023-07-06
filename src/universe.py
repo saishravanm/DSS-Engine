@@ -50,6 +50,25 @@ class Universe:
     def add_group(self, pos, angle, width, height):
         self.physics.add_groups(genericObject.Group(pos, angle, genericObject.sh.Rect(width, height, inf)))
 
+    def find_selected_group(self):
+        print("creating box")
+        group = self.physics.find_selected_group(
+            genericObject.Static(
+                (self.mouse.location[0], self.mouse.location[1]),
+                0,
+                genericObject.sh.Rect(1, 1, inf)
+            )
+        )
+
+        if group:
+            self.edit.main_group = group
+            print(id(group), type(group))
+        else:
+            print("No group there")
+
+    def add_bodie_to_group(self, pos, angle, width, height):
+        self.edit.main_group.add(genericObject.Static(pos, angle, genericObject.sh.Rect(width, height, inf)))
+
     def update(self):  # does something every frame, could be useful for enemy AI or update some values
         if self.mode == "game":
             self.player.update()
