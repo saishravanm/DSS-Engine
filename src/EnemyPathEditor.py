@@ -33,13 +33,13 @@ class Enemy():
 
     def follow_targets(self):
         if self.reached_current_target():
-            self.pos = self.current_target.location
+            self.pos = self.current_target.pos
             self.change_target()
         else:
-            self.follow_object(self.current_target.location)
+            self.follow_object(self.current_target.pos)
 
     def reached_current_target(self):
-        return ((self.current_target.location[0] - self.pos[0])**2 + (self.current_target.location[1] - self.pos[1])**2)**0.5 <= self.speed
+        return ((self.current_target.pos[0] - self.pos[0])**2 + (self.current_target.pos[1] - self.pos[1])**2)**0.5 <= self.speed
 
     def change_target(self):
         if len(self.targets) > 1:
@@ -80,7 +80,6 @@ class Enemy():
     #   if enemy.is_within_range(player_pos):
     #      enemy.follow(player_pos)
 
-
 class Target():
-    def __init__(self,location):
-        self.location = location
+    def __init__(self,pos):
+        self.pos = pos
