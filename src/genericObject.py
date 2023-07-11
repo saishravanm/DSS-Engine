@@ -187,3 +187,20 @@ class TouchMe(GenericObject):
             # self.pressed = False
             print(2)
             self.render_params.color = (250, 250, 250)
+
+
+class Enemy(GenericObject):
+    def __int__(self, pos, angle=0, shape=sh.Rect(60, 60)):
+        super(Enemy, self).__init__(pos, angle, shape)
+
+    def get_pos(self):
+        return (self.pos.x, self.pos.y)
+
+    def set_pos(self, pos):
+        self.pos = Vector2D(pos[0], pos[1])
+
+    def set_angle(self, angle):
+        self.angle = angle
+
+    def update(self, dt):
+        pass
