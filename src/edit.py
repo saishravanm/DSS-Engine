@@ -12,10 +12,10 @@ class Edit:
 
     def set_bodie(self):
         self.bodie_type = "bodie"
-        self.main_group = None
 
     def set_select_group(self):
         self.bodie_type = "select_group"
+        self.main_group = None
 
     def add_group(self, group, group_list):
         pass

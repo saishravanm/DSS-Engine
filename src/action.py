@@ -174,6 +174,7 @@ class SelectGroup(Action):
     def change_universe(self, universe, render):
         print("finding group")
         universe.find_selected_group()
+        print(id(universe.edit.main_group), type(universe.edit.main_group))
 
 
 class StartGroup(Action):
@@ -191,6 +192,7 @@ class FinishGroup(Action):
 
 class StartBodie(Action):
     def change_universe(self, universe, render):
+        print(id(universe.edit.main_group), type(universe.edit.main_group))
         if universe.edit.main_group:
             universe.edit.start = (universe.mouse.location[0], universe.mouse.location[1])
         else:

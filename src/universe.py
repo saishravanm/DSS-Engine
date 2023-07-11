@@ -62,7 +62,7 @@ class Universe:
 
         if group:
             self.edit.main_group = group
-            print(id(group), type(group))
+            print(id(self.edit.main_group), type(self.edit.main_group))
         else:
             print("No group there")
 
