@@ -57,7 +57,6 @@ def main_loop():
 
         clock.tick(settings.FPS)
 
-
 if __name__ == "__main__":
     main_loop()
     pygame.quit()

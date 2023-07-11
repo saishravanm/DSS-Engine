@@ -127,9 +127,9 @@ class Renderer:
 
         # draw
         self.draw(universe.surface_altitudes)
-        if universe.mode == "game":
-            self.cast_rays(universe.player)
-            self.draw_fov(universe.player)
+        # if universe.mode == "game":
+        #     self.cast_rays(universe.player)
+        #     self.draw_fov(universe.player)
         self.draw_player(universe.player)
 
         # EXPERIMENTAL
