@@ -33,7 +33,7 @@ class Universe:
             genericObject.Spinner((950, 700), 0, genericObject.sh.Rect(150, 10, inf)),
             genericObject.TouchMe((500,100), 0, genericObject.sh.Rect(100, 100, inf))
         )
-        self.enemy = Enemy((-100,-100),200,[Target((-200,-200)),Target((-300,-300)), Target((-200,-300))],20,1)
+        self.enemy = Enemy((-100,-100),200,[Target((-200,-200)),Target((-300,-300)), Target((-200,-300))],50,1)
         self.physics.add(self.enemy.rigid_body)
 
     def update(self):  # does something every frame, could be useful for enemy AI or update some values

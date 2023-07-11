@@ -1,8 +1,9 @@
-from genericObject import Enemy
 import genericObject
-import math
-import pygame
-from player import Player
+
+#from genericObject import Enemy
+#import math
+#import pygame
+#from player import Player
 
 
 class Enemy():
@@ -23,7 +24,6 @@ class Enemy():
         else:
             self.follow_targets()
         self.rigid_body.set_pos(self.pos)
-
 
     def follow_object(self, object_pos):
         x, y = (object_pos[0] - self.pos[0],object_pos[1] - self.pos[1])
@@ -57,7 +57,7 @@ class Enemy():
         print(((player_pos[0] - self.pos[0])**2 + (player_pos[1] - self.pos[1])**2)**0.5)
         return ((player_pos[0] - self.pos[0])**2 + (player_pos[1] - self.pos[1])**2)**0.5 <= self.fov
 
-########################
+################################################
     def condition_function(self, target):
         #print("Testcode")
         if self.condition == 1:
@@ -70,8 +70,8 @@ class Enemy():
         else:
             return target
 
-########################
-
+################################################
+#################Experimental###################
     #    player = Player()
     #   enemy = Enemy([50, 50], [300, 300], 5)
     #  while True:
@@ -79,7 +79,9 @@ class Enemy():
     #    enemy.update(player_pos)
     #   if enemy.is_within_range(player_pos):
     #      enemy.follow(player_pos)
+################################################
 
-class Target():
+
+class Target(): #target class for enemy to follow.
     def __init__(self,pos):
         self.pos = pos
