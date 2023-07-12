@@ -136,16 +136,19 @@ class OnOffGrid(Action):  # turns on/off grid for building maps
 class ChangeBodie(Action):
     def change_universe(self, universe, render):
         universe.edit.set_bodie()
+        print("Edit set to Bodie")
 
 
 class ChangeGroup(Action):
     def change_universe(self, universe, render):
         universe.edit.set_group()
+        print("Edit set to Group")
 
 
 class ChangeSelectGroup(Action):
     def change_universe(self, universe, render):
         universe.edit.set_select_group()
+        print("Edit set to select Group")
 
 
 class Click(Action):
@@ -181,6 +184,7 @@ class SelectGroup(Action):
 class StartGroup(Action):
     def change_universe(self, universe, render):
         universe.edit.start = universe.edit.get_mouse_pos(universe.mouse.location)
+        print("Group start is at pos: ", universe.edit.start)
 
 
 class FinishGroup(Action):
@@ -190,6 +194,7 @@ class FinishGroup(Action):
         height = mouse_pos[1] - universe.edit.start[1]
         pos = (universe.edit.start[0] + width/2, universe.edit.start[1] + height/2)
         universe.add_group(pos, 0, width, height)
+        print("Group end is at pos: ", pos)
 
 
 class StartBodie(Action):
@@ -197,6 +202,7 @@ class StartBodie(Action):
         print(id(universe.edit.main_group), type(universe.edit.main_group))
         if universe.edit.main_group:
             universe.edit.start = (universe.mouse.location[0], universe.mouse.location[1])
+            print("Bodie start is at pos: ", universe.edit.start)
         else:
             print("ERROR: empty group. Choose group first")
 
@@ -207,6 +213,7 @@ class FinishBodie(Action):
             height = universe.mouse.location[1] - universe.edit.start[1]
             pos = (universe.edit.start[0] + width/2, universe.edit.start[1] + height/2)
             universe.add_bodie_to_group(pos, 0, width, height)
+            print("Bodie end is at pos: ", pos)
         else:
             print("ERROR: empty group. Choose group first")
 
