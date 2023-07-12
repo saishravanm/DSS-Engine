@@ -129,7 +129,8 @@ class ZoomOut(Action):  # TODO fix: a fraction to whole number conversion so pos
 
 class OnOffGrid(Action):  # turns on/off grid for building maps
     def change_universe(self, universe, render):
-        pass
+        universe.edit.set_grid()
+        print("Grid: ", universe.edit.grid)
 
 
 class ChangeBodie(Action):
@@ -179,13 +180,14 @@ class SelectGroup(Action):
 
 class StartGroup(Action):
     def change_universe(self, universe, render):
-        universe.edit.start = (universe.mouse.location[0], universe.mouse.location[1])
+        universe.edit.start = universe.edit.get_mouse_pos(universe.mouse.location)
 
 
 class FinishGroup(Action):
     def change_universe(self, universe, render):
-        width = universe.mouse.location[0] - universe.edit.start[0]
-        height = universe.mouse.location[1] - universe.edit.start[1]
+        mouse_pos = universe.edit.get_mouse_pos(universe.mouse.location)
+        width = mouse_pos[0] - universe.edit.start[0]
+        height = mouse_pos[1] - universe.edit.start[1]
         pos = (universe.edit.start[0] + width/2, universe.edit.start[1] + height/2)
         universe.add_group(pos, 0, width, height)
 
