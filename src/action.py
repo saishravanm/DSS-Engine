@@ -201,7 +201,7 @@ class StartBodie(Action):
     def change_universe(self, universe, render):
         print(id(universe.edit.main_group), type(universe.edit.main_group))
         if universe.edit.main_group:
-            universe.edit.start = (universe.mouse.location[0], universe.mouse.location[1])
+            universe.edit.start = universe.edit.get_mouse_pos(universe.mouse.location)
             print("Bodie start is at pos: ", universe.edit.start)
         else:
             print("ERROR: empty group. Choose group first")
@@ -209,8 +209,9 @@ class StartBodie(Action):
 class FinishBodie(Action):
     def change_universe(self, universe, render):
         if universe.edit.main_group:
-            width = universe.mouse.location[0] - universe.edit.start[0]
-            height = universe.mouse.location[1] - universe.edit.start[1]
+            mouse_pos = universe.edit.get_mouse_pos(universe.mouse.location)
+            width = mouse_pos[0] - universe.edit.start[0]
+            height = mouse_pos[1] - universe.edit.start[1]
             pos = (universe.edit.start[0] + width/2, universe.edit.start[1] + height/2)
             universe.add_bodie_to_group(pos, 0, width, height)
             print("Bodie end is at pos: ", pos)
