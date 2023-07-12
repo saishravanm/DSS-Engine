@@ -137,6 +137,9 @@ class Renderer:
         #self.draw_gen_obj(universe.physics.bodies)
         self.draw_groups(universe.physics.groups)
 
+        if universe.mode == "map":
+            self.draw_mouse_preview_in_editor(universe.edit, universe.mouse)
+
 # ===================EXPERIMENTAL===================
     def draw_groups(self, groups_list):
         for group in groups_list:
@@ -181,5 +184,9 @@ class Renderer:
                          self.coords.from_universe(gen_obj.vertices[3]))
         pygame.draw.line(self.screen, gen_obj.render_params.color, self.coords.from_universe(gen_obj.vertices[3]),
                          self.coords.from_universe(gen_obj.vertices[0]))
+
+    def draw_mouse_preview_in_editor(self, edit, mouse):
+        screen_pos = self.coords.from_universe(edit.get_mouse_pos(mouse.location))
+        pygame.draw.circle(self.screen, mouse.preview_color, screen_pos, mouse.preview_radius, mouse.preview_thikness)
 
 # ==================================================
