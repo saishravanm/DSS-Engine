@@ -135,15 +135,16 @@ class Renderer:
 
         # EXPERIMENTAL
         #self.draw_gen_obj(universe.physics.bodies)
-        self.draw_groups(universe.physics.groups)
+        self.draw_groups(universe.physics.groups, universe.mode == "map")  # this is stupid, I will fix it latter
 
         if universe.mode == "map":
             self.draw_mouse_preview_in_editor(universe.edit, universe.mouse)
 
 # ===================EXPERIMENTAL===================
-    def draw_groups(self, groups_list):
+    def draw_groups(self, groups_list, draw_group):
         for group in groups_list:
-            self.draw_gen_obj_map[group.shape.shape_type](group)
+            if draw_group:
+                self.draw_gen_obj_map[group.shape.shape_type](group)
             self.draw_gen_obj(group.bodies) 
 
     def draw_gen_obj(self, gen_obj_list):
