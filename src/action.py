@@ -151,12 +151,25 @@ class ChangeSelectGroup(Action):
         print("Edit set to select Group")
 
 
+class ChangeRemoveGroup(Action):
+    def change_universe(self, universe, render):
+        universe.edit.set_remove_group()
+        print("Edit set to remove Group")
+
+
+class ChangeRemoveBodie(Action):
+    def change_universe(self, universe, render):
+        universe.edit.set_remove_bodie()
+        print("Edit set to remove Bodie")
+
+
 class Click(Action):
     def change_universe(self, universe, render):
         map_list = {
             "group":StartGroup().change_universe, 
             "bodie":StartBodie().change_universe, 
             "select_group":SelectGroup().change_universe,
+            "remove_group":RemoveGroup().change_universe,
         }
 
         if map_list.get(universe.edit.bodie_type):
@@ -177,7 +190,8 @@ class Unclick(Action):
 class SelectGroup(Action):
     def change_universe(self, universe, render):
         print("finding group")
-        universe.find_selected_group()
+        group = universe.find_selected_group()
+        universe.set_edit_main_group(group)
         print(id(universe.edit.main_group), type(universe.edit.main_group))
 
 
@@ -207,4 +221,9 @@ class FinishBodie(Action):
             universe.add_bodie_to_group()
         else:
             print("ERROR: empty group. Choose group first")
+
+
+class RemoveGroup(Action):
+    def change_universe(self, universe, render):
+        universe.remove_group()
 

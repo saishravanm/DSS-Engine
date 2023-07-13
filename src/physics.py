@@ -32,6 +32,10 @@ class PhysicsWorld:
         for group in groups:
             print("Group added", id(group))
 
+    def remove_group(self, group):
+        self.groups.remove(group)
+        print("Group removed", id(group))
+
     def add(self, *bodies):
         self.bodies += bodies
         for body in bodies:

@@ -19,6 +19,12 @@ class Edit:
         self.bodie_type = "select_group"
         self.main_group = None
 
+    def set_remove_group(self):
+        self.bodie_type = "remove_group"
+
+    def set_remove_bodie(self):
+        self.bodie_type = "remove_bodie"
+
     def set_grid(self):
         self.grid = not self.grid
 

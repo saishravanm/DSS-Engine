@@ -66,6 +66,9 @@ class Universe:
             )
         )
 
+        return group
+
+    def set_edit_main_group(self, group):
         if group:
             self.edit.main_group = group
             print(id(self.edit.main_group), type(self.edit.main_group))
@@ -80,6 +83,14 @@ class Universe:
         pos = (self.edit.start[0] + width/2, self.edit.start[1] + height/2)
         print("Bodie end is at pos: ", pos)
         self.edit.main_group.add(genericObject.Static(pos, angle, genericObject.sh.Rect(width, height, inf)))
+
+    def remove_group(self):
+        group = self.find_selected_group()
+
+        if group:
+            self.physics.remove_group(group)
+        else:
+            print("No group there")
 
     def update(self):  # does something every frame, could be useful for enemy AI or update some values
         if self.mode == "game":

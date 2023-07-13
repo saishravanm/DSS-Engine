@@ -65,6 +65,8 @@ TRANSLATION_MAP = {
             pygame.K_1: ChangeGroup(),
             pygame.K_2: ChangeBodie(),
             pygame.K_3: ChangeSelectGroup(),
+            pygame.K_4: ChangeRemoveGroup(),
+            pygame.K_5: ChangeRemoveBodie(),
         },
         'key_up': {
             # add some methods that are executed when key is up pressed
