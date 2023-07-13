@@ -47,7 +47,13 @@ class Universe:
             )
         )
 
-    def add_group(self, pos, angle, width, height):
+    def add_group(self):
+        angle = 0
+        mouse_pos = self.edit.get_mouse_pos(self.mouse.location)
+        width = mouse_pos[0] - self.edit.start[0]
+        height = mouse_pos[1] - self.edit.start[1]
+        pos = (self.edit.start[0] + width/2, self.edit.start[1] + height/2)
+        print("Group end is at pos: ", pos)
         self.physics.add_groups(genericObject.Group(pos, angle, genericObject.sh.Rect(width, height, inf)))
 
     def find_selected_group(self):
@@ -66,7 +72,13 @@ class Universe:
         else:
             print("No group there")
 
-    def add_bodie_to_group(self, pos, angle, width, height):
+    def add_bodie_to_group(self):
+        angle = 0
+        mouse_pos = self.edit.get_mouse_pos(self.mouse.location)
+        width = mouse_pos[0] - self.edit.start[0]
+        height = mouse_pos[1] - self.edit.start[1]
+        pos = (self.edit.start[0] + width/2, self.edit.start[1] + height/2)
+        print("Bodie end is at pos: ", pos)
         self.edit.main_group.add(genericObject.Static(pos, angle, genericObject.sh.Rect(width, height, inf)))
 
     def update(self):  # does something every frame, could be useful for enemy AI or update some values
