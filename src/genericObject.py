@@ -193,6 +193,7 @@ class Group(GenericObject):
         super(Group, self).__init__(pos, angle, shape)
         self.bodies = []
         self.add(*bodies)
+        self._render_params.color = (255, 0, 255)
 
     def add(self, *bodies):
         self.bodies += bodies
