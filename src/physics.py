@@ -53,6 +53,14 @@ class PhysicsWorld:
                 return group
         return None
 
+    def find_selected_body(self, mouse, bodies):
+        for body in bodies:
+            collision, depth, normal = body.collide(mouse)
+            if collision:
+                print("Found")
+                return body
+        return None
+
     def update(self, dt):
         tested = []
         test_groups = []

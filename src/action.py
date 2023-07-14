@@ -170,6 +170,7 @@ class Click(Action):
             "bodie":StartBodie().change_universe, 
             "select_group":SelectGroup().change_universe,
             "remove_group":RemoveGroup().change_universe,
+            "remove_bodie":RemoveBodie().change_universe,
         }
 
         if map_list.get(universe.edit.bodie_type):
@@ -226,4 +227,12 @@ class FinishBodie(Action):
 class RemoveGroup(Action):
     def change_universe(self, universe, render):
         universe.remove_group()
+
+
+class RemoveBodie(Action):
+    def change_universe(self, universe, render):
+        if universe.edit.main_group:
+            universe.remove_body()
+        else:
+            print("Please select group first")
 

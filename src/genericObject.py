@@ -200,3 +200,7 @@ class Group(GenericObject):
         for body in bodies:
             print("Body added", id(body))
 
+    def remove(self, body):
+        self.bodies.remove(body)
+        print("Body removed", id(body))
+

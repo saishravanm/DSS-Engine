@@ -92,6 +92,28 @@ class Universe:
         else:
             print("No group there")
 
+    def find_selected_body(self):
+        print("creating box")
+        body = self.physics.find_selected_body(
+            genericObject.Static(
+                (self.mouse.location[0], self.mouse.location[1]),
+                0,
+                genericObject.sh.Rect(1, 1, inf)
+            ),
+            self.edit.main_group.bodies
+        )
+
+        return body
+
+    def remove_body(self):
+        body = self.find_selected_body()
+
+        if body:
+            self.edit.main_group.remove(body)
+        else:
+            print("No body there")
+
+
     def update(self):  # does something every frame, could be useful for enemy AI or update some values
         if self.mode == "game":
             self.player.update()
